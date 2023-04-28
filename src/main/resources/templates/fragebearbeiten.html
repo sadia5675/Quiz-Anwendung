@@ -1,0 +1,34 @@
+<html>
+<head>
+	<title>Frage bearbeiten</title>
+</head>
+<body>
+	<h1>Bearbeite Frage nr.1</h1>
+	<form>
+		<label for="category">Kategorie:</label>
+		<select id="category" name="category">
+			<option value="geschichte">Geschichte</option>
+			<option value="geographie">Geographie</option>
+			<option value="sport">Sport</option>
+			<option value="wissenschaft">Wissenschaft</option>
+		</select>
+		<br><br>
+		<label for="question">Fragetext:</label>
+		<input type="text" id="frage" name="correctAnswer">
+		<br><br>
+		<label for="correctAnswer">Richtige Antwort:</label>
+		<input type="text" id="richtigeAntwort" name="correctAnswer">
+		<br><br>
+		
+		<label for="points">Punktzahl:</label>
+		<input type="number" id="punkte" name="points" min="1" max="10">
+        <br><br>
+        <h1>Falsche Antworten (max4)</h1>
+		<input type="text" id="wrongAnswers" name="wrongAnswers">
+		<br><br>
+	</form>
+
+
+    <input type="submit" value="Submit">
+</body>
+</html>
