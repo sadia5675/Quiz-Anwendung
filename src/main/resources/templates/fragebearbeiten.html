@@ -5,7 +5,8 @@
 <body>
 	<link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> <!--die css datei muss im static ordner sein damit sie für n fragen das selbe design hat-->
 	<h1>Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> <!--damit n fragen angeigt reden sehe zeile 6 im FrageController.java-->
-	<form action="#" method="POST"></form> <!-- "#" weil es keine spezielle URL gibt, an die das Formular gesendet wird  und der Inhalt der Formularfelder bleibt auf derselben Seite-->
+	
+	<form action="#" method="POST" th:action="@{#}"></form> <!-- "#" weil es keine spezielle URL gibt, an die das Formular gesendet wird  und der Inhalt der Formularfelder bleibt auf derselben Seite-->
 		<label for="category">Kategorie:</label>
 		<select id="category" name="category">
 			<option value="geschichte">Geschichte</option>
