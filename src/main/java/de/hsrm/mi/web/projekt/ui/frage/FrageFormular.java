@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FrageFormular {
-
+    private String fragenr;
     private String kategorie;
     private String fragetext;
     private String richtigeAntwort;
@@ -11,7 +11,8 @@ public class FrageFormular {
 
 
     //Konstruktor
-    public FrageFormular(String kategorie,String fragetext,String richtigeAntwort,int punktzahl) {
+    public FrageFormular(String fragenr, String kategorie,String fragetext,String richtigeAntwort,int punktzahl) {
+        this.fragenr= fragenr;
         this.kategorie = kategorie;
         this.fragetext = fragetext;
         this.richtigeAntwort = richtigeAntwort;
@@ -31,13 +32,16 @@ public class FrageFormular {
         return kategorien;
     }
 
-
-    public String getFragetext() {
-        return fragetext;
+    public String getFragenr() {
+        return fragenr;
     }
 
-    public void setFragetext(String fragetext) {
-        this.fragetext = fragetext;
+    public String getKategorie() {
+        return kategorie;
+    }
+    
+    public String getFragetext() {
+        return fragetext;
     }
 
 
@@ -45,20 +49,29 @@ public class FrageFormular {
         return richtigeAntwort;
     }
 
-    public void setRichtigeAntwort(String richtigeAntwort) {
-        this.richtigeAntwort = richtigeAntwort;
-    }
-
 
     public int getPunktzahl() {
         return punktzahl;
     }
 
+    public void setFragenr(String fragenr) {
+        this.fragenr = fragenr;
+    }
+
+    public void setKategorie(String kategorie) {
+        this.kategorie = kategorie;
+    }
+
+    public void setFragetext(String fragetext) {
+        this.fragetext = fragetext;
+    }
+
+    public void setRichtigeAntwort(String richtigeAntwort) {
+        this.richtigeAntwort = richtigeAntwort;
+    }
+
     public void setPunktzahl(int punktzahl) {
         this.punktzahl = punktzahl;
     }
-
-
-
 
 }

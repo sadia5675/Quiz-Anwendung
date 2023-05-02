@@ -3,37 +3,34 @@
 	<title>Frage bearbeiten</title>
 </head>
 <body>
-	<link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> <!--die css datei muss im static ordner sein damit sie für n fragen das selbe design hat-->
-	<h1>Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> <!--damit n fragen angeigt reden sehe zeile 6 im FrageController.java-->
-	
-	<form action="#" method="POST" th:action="@{#}"> <!-- "#" weil es keine spezielle URL gibt, an die das Formular gesendet wird  und der Inhalt der Formularfelder bleibt auf derselben Seite-->
-		<label for="category">Kategorie:</label>
-		<select id="category" name="kategorie">
-			<option value="geschichte">Geschichte</option>
-			<option value="geographie">Geographie</option>
-			<option value="sport">Sport</option>
-			<option value="wissenschaft">Wissenschaft</option>
+	<link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> <!--die css datei muss im static ordner sein, damit sie für n fragen das selbe design hat-->
+	<h1>Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> <!--damit n fragen angezeigt werden // sehe zeile 6 im FrageController.java-->
+	<form action="#" method="POST"> <!-- "#" weil es keine spezielle URL gibt, an die das Formular gesendet wird und der Inhalt der Formularfelder bleibt auf derselben Seite-->
+		<label for="kategorie">Kategorie:</label>
+		<select id="kategorie" name="kategorie">
+			<option value="">""</option>
+			<option value="Allgemeines">Allgemeines</option>
+			<option value="Zahlen">Zahlen</option>
+			<option value="Sachen">Sachen</option>
+			<option value="Orte">Orte</option>
+			<option value="Ereignisse">Ereignisse</option>
 		</select>
 		<br><br>
-		<label for="question">Fragetext:</label>
-		<input type="text" id="frage" name="fragetext">
+		<label for="fragetext">Fragetext:</label>
+		<input type="text" id="fragetext" name="fragetext">
 		<br><br>
-		<label for="correctAnswer">Richtige Antwort:</label>
+		<label for="richtigeAntwort">Richtige Antwort:</label>
 		<input type="text" id="richtigeAntwort" name="richtigeAntwort">
 		<br><br>
 		
-		<label for="points">Punktzahl:</label>
-		<input type="number" id="punkte" name="punktzahl" min="1" max="10">
+		<label for="punktzahl">Punktzahl:</label>
+		<input type="number" id="punktzahl" name="punktzahl" min="1" max="10">
         <br><br>
         <h1>Falsche Antworten (max4)</h1>
-		<input type="text" id="wrongAnswers" name="falscheAntwort">
+		<input type="text" id="falscheAntwort" name="falscheAntwort">
 		<br><br>
-
 		<input type="submit" value="Submit">
-		
 	</form>
 
-
-    
 </body>
 </html>
