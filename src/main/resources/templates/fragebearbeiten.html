@@ -3,12 +3,12 @@
 	<title>Frage bearbeiten</title>
 </head>
 <body>
-	<link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> <!--die css datei muss im static ordner sein, damit sie für n fragen das selbe design hat-->
-	<h1>Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> <!--damit n fragen angezeigt werden // sehe zeile 6 im FrageController.java-->
-	<form th:action=@{#} th:method="POST" th:object="${frageformular}"> <!-- "#" weil es keine spezielle URL gibt, an die das Formular gesendet wird und der Inhalt der Formularfelder bleibt auf derselben Seite-->
-		<label for="kategorie">Kategorie:</label>
-		<select id="kategorie" name="kategorie" th:field="*{kategorie}">
-			<option value="">""</option>
+	<link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> 
+	<h1>Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> 
+	<form th:action=@{#} th:method="POST" th:object="${frageformular}">
+		<label for="kategorien">kategorie:</label>
+		<select id="kategorien" name="kategorien" th:field="*{kategorie}">
+			<option value=""></option> <!--ITERATION: <select name="kategorie"> <option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}"></option> aber session kontext von kategorie ist weg-->
 			<option value="Allgemeines">Allgemeines</option>
 			<option value="Zahlen">Zahlen</option>
 			<option value="Sachen">Sachen</option>
@@ -22,11 +22,10 @@
 		<label for="richtigeAntwort">Richtige Antwort:</label>
 		<input type="text" id="richtigeAntwort" name="richtigeAntwort" th:field="*{richtigeAntwort}">
 		<br><br>
-		
 		<label for="punktzahl">Punktzahl:</label>
 		<input type="number" id="punktzahl" name="punktzahl" min="1" max="10" th:field="*{punktzahl}">
         <br><br>
-        <h1>Falsche Antworten (max4)</h1>
+        <h1>Falsche Antworten <span th:text="*{maxfalsch}"></span></h1>
 		<input type="text" id="falscheAntwort" name="falscheAntwort" >
 		<br><br>
 		<input type="submit" value="Submit">

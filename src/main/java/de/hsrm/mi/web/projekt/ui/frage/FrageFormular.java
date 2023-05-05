@@ -3,16 +3,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FrageFormular {
-    
     private String kategorie;
     private String fragetext;
     private String richtigeAntwort;
     private int punktzahl;
+    private final int maxfalsch = 4;
 
-
-
-    //ein Getter soll für die Kategorien-Eigenschaft eine Java-Liste mit den Strings "", "Allgemeines", "Zahlen", "Sachen", "Orte", "Ereignisse" zurückliefern
-    public static List<String> getKategorien() {
+    public List<String> getKategorien() {
         List<String> kategorien = new ArrayList<>();
         kategorien.add("");
         kategorien.add("Allgemeines");
@@ -22,7 +19,6 @@ public class FrageFormular {
         kategorien.add("Ereignisse");
         return kategorien;
     }
-
 
     public String getKategorie() {
         return kategorie;
@@ -43,7 +39,7 @@ public class FrageFormular {
     }
 
     public void setKategorie(String kategorie) {
-        this.kategorie = kategorie;
+        this.kategorie = kategorie; 
     }
 
     public void setFragetext(String fragetext) {
@@ -58,4 +54,7 @@ public class FrageFormular {
         this.punktzahl = punktzahl;
     }
 
+    public int getMaxfalsch() {
+        return maxfalsch;
+    }
 }
