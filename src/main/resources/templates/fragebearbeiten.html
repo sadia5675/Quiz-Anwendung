@@ -5,9 +5,9 @@
 <body>
 	<link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> <!--die css datei muss im static ordner sein, damit sie für n fragen das selbe design hat-->
 	<h1>Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> <!--damit n fragen angezeigt werden // sehe zeile 6 im FrageController.java-->
-	<form action="#" method="POST"> <!-- "#" weil es keine spezielle URL gibt, an die das Formular gesendet wird und der Inhalt der Formularfelder bleibt auf derselben Seite-->
+	<form th:action=@{#} th:method="POST" th:object="${frageformular}"> <!-- "#" weil es keine spezielle URL gibt, an die das Formular gesendet wird und der Inhalt der Formularfelder bleibt auf derselben Seite-->
 		<label for="kategorie">Kategorie:</label>
-		<select id="kategorie" name="kategorie">
+		<select id="kategorie" name="kategorie" th:field="*{kategorie}">
 			<option value="">""</option>
 			<option value="Allgemeines">Allgemeines</option>
 			<option value="Zahlen">Zahlen</option>
@@ -17,17 +17,17 @@
 		</select>
 		<br><br>
 		<label for="fragetext">Fragetext:</label>
-		<input type="text" id="fragetext" name="fragetext">
+		<input type="text" id="fragetext" name="fragetext" th:field="*{fragetext}">
 		<br><br>
 		<label for="richtigeAntwort">Richtige Antwort:</label>
-		<input type="text" id="richtigeAntwort" name="richtigeAntwort">
+		<input type="text" id="richtigeAntwort" name="richtigeAntwort" th:field="*{richtigeAntwort}">
 		<br><br>
 		
 		<label for="punktzahl">Punktzahl:</label>
-		<input type="number" id="punktzahl" name="punktzahl" min="1" max="10">
+		<input type="number" id="punktzahl" name="punktzahl" min="1" max="10" th:field="*{punktzahl}">
         <br><br>
         <h1>Falsche Antworten (max4)</h1>
-		<input type="text" id="falscheAntwort" name="falscheAntwort">
+		<input type="text" id="falscheAntwort" name="falscheAntwort" >
 		<br><br>
 		<input type="submit" value="Submit">
 	</form>
