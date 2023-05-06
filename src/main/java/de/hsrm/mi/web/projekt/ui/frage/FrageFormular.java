@@ -7,8 +7,9 @@ public class FrageFormular {
     private String fragetext;
     private String richtigeAntwort;
     private int punktzahl;
-    private final int maxfalsch = 4;
+    private List<String> falscheAntworten = new ArrayList<>();
 
+    
     public List<String> getKategorien() {
         List<String> kategorien = new ArrayList<>();
         kategorien.add("");
@@ -18,6 +19,22 @@ public class FrageFormular {
         kategorien.add("Orte");
         kategorien.add("Ereignisse");
         return kategorien;
+    }
+
+    public void addFalscheAntwort(String antwort) {
+        falscheAntworten.add(antwort);
+    }
+
+    public void removeFalscheAntwort(int index) {
+        falscheAntworten.remove(index);
+    }
+
+    public int getFalscheAntwortIndex(String antwort){
+        return falscheAntworten.indexOf(antwort);
+    }
+
+    public List<String> getfalscheAntworten() {
+        return falscheAntworten;
     }
 
     public String getKategorie() {
@@ -54,7 +71,11 @@ public class FrageFormular {
         this.punktzahl = punktzahl;
     }
 
-    public int getMaxfalsch() {
-        return maxfalsch;
+    public List<String> getFalscheAntworten() {
+        return falscheAntworten;
+    }
+
+    public void setFalscheAntworten(List<String> falscheAntworten) {
+        this.falscheAntworten = falscheAntworten;
     }
 }
