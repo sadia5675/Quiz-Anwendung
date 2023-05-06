@@ -26,19 +26,19 @@
 		<input type="number" id="punktzahl" name="punktzahl" min="1" max="10" th:field="*{punktzahl}">
         <br><br>
 
-        <h1>Falsche Antworten <span th:text="${maxfalsch}"></span></h1>
+        <h1>Falsche Antworten max. <span th:text="${maxfalsch}"></span></h1>
 		<div id="falscheAntworten">
 			
-			<div th:each="eintrag: ${frageformular.getfalscheAntworten}">
+			<div th:each="eintrag, iter: ${frageformular.getfalscheAntworten}">
+				<label th:for="'eintrag-' + ${iter.index}"><span th:text="${iter.index + 1}"></span></label>
 				<input type="text" id="eintrag" name="eintrag" th:value="${eintrag}">
 			</div>
 
-			<div>
+			<div th:if="${frageformular.falscheAntworten.size() != maxfalsch}">
 				<label th:for="neuerEintrag">neuer Eintrag:</label>
 				<input type="text" id="neuerEintrag" name="neuerEintrag">
 			</div>
 
-			<!--<span th:if="${frageformular.falscheAntworten.size() == maxfalsch}">Maximale Anzahl an falschen Antworten erreicht.</span>-->
 		</div>
 		<br><br>
 
