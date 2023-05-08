@@ -26,7 +26,8 @@ public class FrageController {
     }
 
     @GetMapping("{fragenr}") 
-    public String anzeigen(@PathVariable String fragenr, Model m){ 
+    public String anzeigen(@PathVariable String fragenr, Model m,
+                            @ModelAttribute("frageformular") FrageFormular formular){ 
         
         m.addAttribute("fragenr",fragenr);
         m.addAttribute("maxfalsch", MAX_FALSCH);
@@ -36,54 +37,22 @@ public class FrageController {
          
 
     @PostMapping("{fragenr}")
-    public String formular_post( @PathVariable String fragenr,Model m,
+    public String formular_post(@PathVariable String fragenr,Model m,
                                 @ModelAttribute("frageformular") FrageFormular formular,
-                                @RequestParam("neuerEintrag") String neuerEintrag
-                                ){
+                                @RequestParam(required = false) String neuerEintrag){
+        
                                 
-        m.addAttribute("fragenr",fragenr);      
-        m.addAttribute("maxfalsch", MAX_FALSCH);
-
-        logger.info("neuerEintrag = {}", neuerEintrag);
+        formular.getFalscheAntworten().removeIf(eintrag -> eintrag.isEmpty());
 
         if (formular.getFalscheAntworten().size() < MAX_FALSCH){
-            if(!neuerEintrag.isEmpty()){
+            if (neuerEintrag != null && !neuerEintrag.isEmpty()) {
                 formular.addFalscheAntwort(neuerEintrag);
             }
            
         }
 
-
-        //Schleife, die geht durch alle falsche Antworten durch. falls leer -> soll aus Liste rausnehmen
-        int index = 0;
-        for (String eintrage:formular.getFalscheAntworten()){
-            
-            if (eintrage.isEmpty()) {
-                formular.removeFalscheAntwort(index);
-            }
-            System.out.println(eintrage + " index: " + index);
-            index++;
-        }
-
-
-        // Vorherige Versuche, Schleife zu machen 
-        
-       /*  if(neuerEintrag == null){
-            formular.removeFalscheAntwort(formular.getFalscheAntwortIndex(null));
-        } */
-      
-        /* 
-        List<String> falscheAntworten = formular.getfalscheAntworten();
-
-        for (int i = 0; i < falscheAntworten.size(); i++) {
-            String antwort = falscheAntworten.get(i);
-            if (antwort == null || antwort.trim().isEmpty()) {
-                formular.removeFalscheAntwort(i);
-                falscheAntworten.remove(i);
-            }
-        }
-        */
-        
+        m.addAttribute("fragenr",fragenr);      
+        m.addAttribute("maxfalsch", MAX_FALSCH);
 
         logger.info("falsche Antworten = {}", formular.getFalscheAntworten());
         

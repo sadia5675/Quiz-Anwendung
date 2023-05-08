@@ -6,22 +6,21 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> 
 	<h1>Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> 
 	<form th:action=@{#} th:method="POST" th:object="${frageformular}">
+		
 		<label for="kategorien">kategorie:</label>
-		<select id="kategorien" name="kategorien" th:field="*{kategorie}">
-			<option value=""></option> <!--ITERATION: <select name="kategorie"> <option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}"></option> aber session kontext von kategorie ist weg-->
-			<option value="Allgemeines">Allgemeines</option>
-			<option value="Zahlen">Zahlen</option>
-			<option value="Sachen">Sachen</option>
-			<option value="Orte">Orte</option>
-			<option value="Ereignisse">Ereignisse</option>
+		<select id="kategorien" name="kategorie"> 
+			<option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}" th:field="*{kategorie}"></option>
 		</select>
 		<br><br>
+
 		<label for="fragetext">Fragetext:</label>
 		<input type="text" id="fragetext" name="fragetext" th:field="*{fragetext}">
 		<br><br>
+
 		<label for="richtigeAntwort">Richtige Antwort:</label>
 		<input type="text" id="richtigeAntwort" name="richtigeAntwort" th:field="*{richtigeAntwort}">
 		<br><br>
+		
 		<label for="punktzahl">Punktzahl:</label>
 		<input type="number" id="punktzahl" name="punktzahl" min="1" max="10" th:field="*{punktzahl}">
         <br><br>
@@ -29,9 +28,9 @@
         <h1>Falsche Antworten max. <span th:text="${maxfalsch}"></span></h1>
 		<div id="falscheAntworten">
 			
-			<div th:each="eintrag, iter: ${frageformular.getfalscheAntworten}">
+			<div th:each="eintrag, iter: ${frageformular.getFalscheAntworten}">
 				<label th:for="'eintrag-' + ${iter.index}"><span th:text="${iter.index + 1}"></span></label>
-				<input type="text" id="eintrag" name="eintrag" th:value="${eintrag}">
+				<input type="text" id="eintrag" name="eintrag" th:field="*{falscheAntworten[__${iter.index}__]}" th:value="${eintrag}">
 			</div>
 
 			<div th:if="${frageformular.falscheAntworten.size() != maxfalsch}">
