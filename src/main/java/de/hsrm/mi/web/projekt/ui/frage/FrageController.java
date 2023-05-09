@@ -3,11 +3,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,9 +47,11 @@ public class FrageController {
     @PostMapping("{fragenr}")
     public String formular_post(@PathVariable String fragenr,
                                 Model m,
-                                @ModelAttribute("frageformular") FrageFormular formular,
+                                @Valid @ModelAttribute("frageformular") FrageFormular formular,
+                                BindingResult formularErrors,
                                 @RequestParam(required = false) String neuerEintrag){ //@RequestParam(required = false) gibt an, dass der Parameter nicht erforderlich ist//Wenn der Parameter in der Anfrage enthalten ist, wird er an den Controller-Methodenparameter gebunden // view: name="name"
         
+
         //Mit removeIf() wird jedes Element aus der Liste entfernt, das leer ist               
         formular.getFalscheAntworten().removeIf(eintrag -> eintrag.isEmpty());
         // prüft, ob die Anzahl der falschen Antworten im Frageformular nicht bereits das maximale Limit erreicht hat
