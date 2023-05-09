@@ -5,19 +5,20 @@
 <body>
 	<link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> 
 	<h1>Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> 
-	<form th:action=@{#} th:method="POST" th:object="${frageformular}">
+	<form th:action="@{#}" th:method="POST" th:object="${frageformular}">
 		
 		<label for="kategorien">kategorie:</label>
 		<select id="kategorien" name="kategorie"> 
+			<!--th:each-Schleife iteriert durch die Kategorien in der Liste und erstellt eine Option für jede Kategorie-->
 			<option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}" th:field="*{kategorie}"></option>
 		</select>
 		<br><br>
 
 		<label for="fragetext">Fragetext:</label>
-		<input type="text" id="fragetext" name="fragetext" th:field="*{fragetext}">
+		<input type="text" id="fragetext" name="fragetext" th:field="*{fragetext}"> <!-- *{ } Formulardatenbindung wird verwendet, um Daten aus einem HTML-Formular an ein Objekt zu binden // das objekt th:object="${frageformular}-->
 		<br><br>
 
-		<label for="richtigeAntwort">Richtige Antwort:</label>
+		<label for="richtigeAntwort">Richtige:</label>
 		<input type="text" id="richtigeAntwort" name="richtigeAntwort" th:field="*{richtigeAntwort}">
 		<br><br>
 		
@@ -27,14 +28,14 @@
 
         <h1>Falsche Antworten max. <span th:text="${maxfalsch}"></span></h1>
 		<div id="falscheAntworten">
-			
+			<!--Schleife, die alle Einträge in der Liste falscheAntworten des frageformular-Objekts durchläuft-->
 			<div th:each="eintrag, iter: ${frageformular.getFalscheAntworten}">
-				<label th:for="'eintrag-' + ${iter.index}"><span th:text="${iter.index + 1}"></span></label>
-				<input type="text" id="eintrag" name="eintrag" th:field="*{falscheAntworten[__${iter.index}__]}" th:value="${eintrag}">
+				<label th:for="'eintrag-' + ${iter.index}"><span th:text="${iter.index + 1}"></span>:</label>
+				<input type="text" id="eintrag" name="eintrag" th:field="*{falscheAntworten[__${iter.index}__]}" th:value="${eintrag}"> <!--th:field-Attribut des Input-Feldes angibt, welches Feld in frageformular dem Input-Feld zugeordnet ist //__${iter.index}__ wird verwendet, um auf den aktuellen Index des Eintrags in der Schleife zuzugreifen-->
 			</div>
-
+			<!--Einen neuen Eintrag hinzuzufügen, wenn die Anzahl der falschen Antworten noch nicht das Maximum erreicht hat-->
 			<div th:if="${frageformular.falscheAntworten.size() != maxfalsch}">
-				<label th:for="neuerEintrag">neuer Eintrag:</label>
+				<label th:for="neuerEintrag">Neu:</label>
 				<input type="text" id="neuerEintrag" name="neuerEintrag">
 			</div>
 
