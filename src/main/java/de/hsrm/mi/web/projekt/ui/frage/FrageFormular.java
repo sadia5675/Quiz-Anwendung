@@ -1,6 +1,8 @@
 package de.hsrm.mi.web.projekt.ui.frage;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hsrm.mi.web.projekt.validators.Verschieden;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +25,7 @@ public class FrageFormular {
     @Max(value = 17, message = "Die Punktzahl darf maximal 17 sein.") 
     private int punktzahl;
 
+    @Verschieden(message = "{validators.verschieden}")
     private ArrayList<String> falscheAntworten = new ArrayList<>();
 
     
