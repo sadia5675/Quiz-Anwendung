@@ -43,3 +43,21 @@ input[type="submit"] {
 input[type="submit"]:hover {
 	background-color: #555;
 }
+
+.error-message {
+	color: red;
+	display: block; 
+    font-size: 0.8em; 
+	padding-left: 115px;
+	
+}
+
+input:invalid {
+	border: 2px solid red;
+	
+}
+
+#frageText:invalid, #richtigeAntwort:invalid, #punktzahl:invalid {
+	border: 2px solid red;
+
+}

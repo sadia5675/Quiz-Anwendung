@@ -1,34 +1,28 @@
 package de.hsrm.mi.web.projekt.ui.frage;
 import java.util.ArrayList;
 import java.util.List;
-
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-
-
 
 public class FrageFormular {
 
-    //@Valid
     @NotBlank(message="Kategorie darf nicht leer sein")
     private String kategorie;
     
-    @NotEmpty(message="Fragetext darf nicht leer sein")
-    @Size(min = 5, max = 80, message="Laenge von {min} bis {max}")
+    @NotBlank(message="Kategorie darf nicht leer sein")
+    @Size(min = 5, max = 80, message="Länge muss von {min} bis {max} sein")
     private String fragetext;
 
-    @NotBlank
-    @Size(min = 1, max = 80, message="Laenge von {min} bis {max}")
+    @NotBlank(message="Kategorie darf nicht leer sein")
+    @Size(min = 1, max = 80, message="Die Länge muss von {min} bis {max} sein")
     private String richtigeAntwort;
 
-    @Min(0) @Max(17) 
+    @Min(value = 0, message = "Die Punktzahl darf nicht negativ sein.")
+    @Max(value = 17, message = "Die Punktzahl darf maximal 17 sein.") 
     private int punktzahl;
 
-    @Size(min = 1, message="Du sollst mindestens 1 Falscheantwort haben")
     private ArrayList<String> falscheAntworten = new ArrayList<>();
 
     

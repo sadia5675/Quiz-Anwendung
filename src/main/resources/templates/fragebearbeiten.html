@@ -12,18 +12,22 @@
 			<!--th:each-Schleife iteriert durch die Kategorien in der Liste und erstellt eine Option für jede Kategorie-->
 			<option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}" th:field="*{kategorie}"></option>
 		</select>
+		<span th:if="${#fields.hasErrors('kategorie')}" th:errors="*{kategorie}" class="error-message"></span>
 		<br><br>
 
 		<label for="fragetext">Fragetext:</label>
-		<input type="text" id="fragetext" name="fragetext" th:field="*{fragetext}"> <!-- *{ } Formulardatenbindung wird verwendet, um Daten aus einem HTML-Formular an ein Objekt zu binden // das objekt th:object="${frageformular}-->
+		<input type="text" id="fragetext" name="fragetext" th:field="*{fragetext}" > <!-- *{ } Formulardatenbindung wird verwendet, um Daten aus einem HTML-Formular an ein Objekt zu binden // das objekt th:object="${frageformular}-->
+		<span th:if="${#fields.hasErrors('fragetext')}" th:errors="*{fragetext}" class="error-message"></span> 
 		<br><br>
 
 		<label for="richtigeAntwort">Richtige:</label>
 		<input type="text" id="richtigeAntwort" name="richtigeAntwort" th:field="*{richtigeAntwort}">
+		<span th:if="${#fields.hasErrors('richtigeAntwort')}" th:errors="*{richtigeAntwort}" class="error-message"></span>
 		<br><br>
 		
 		<label for="punktzahl">Punktzahl:</label>
-		<input type="number" id="punktzahl" name="punktzahl" min="1" max="10" th:field="*{punktzahl}">
+		<input type="number" id="punktzahl" name="punktzahl" th:field="*{punktzahl}">
+		<span th:if="${#fields.hasErrors('punktzahl')}" th:errors="*{punktzahl}" class="error-message"></span>
         <br><br>
 
         <h1>Falsche Antworten max. <span th:text="${maxfalsch}"></span></h1>
