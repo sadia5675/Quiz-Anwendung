@@ -14,33 +14,33 @@
 		</div>
 	</div>
 
-	<h1>Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> 
+	<h1 th:text = "#{frageformular.titel.bearbeiten}">Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> 
 	<form th:action="@{#}" th:method="POST" th:object="${frageformular}">
 		
-		<label for="kategorien">kategorie:</label>
-		<select id="kategorien" name="kategorie" th:errorclass="fehlerFeld"> 
+		<label for="kategorien" th:text = "#{frageformular.label.kategorie}" >kategorie:</label>
+		<select id="kategorien" name="kategorie"> 
 			<!--th:each-Schleife iteriert durch die Kategorien in der Liste und erstellt eine Option für jede Kategorie-->
 			<option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}" th:field="*{kategorie}"></option>
 		</select>
 		<span th:if="${#fields.hasErrors('kategorie')}" th:errors="*{kategorie}" class="error-message"></span>
 		<br><br>
 
-		<label for="fragetext">Fragetext:</label>
-		<input type="text" id="fragetext" name="fragetext" th:field="*{fragetext}" th:errorclass="fehlerFeld"> <!-- *{ } Formulardatenbindung wird verwendet, um Daten aus einem HTML-Formular an ein Objekt zu binden // das objekt th:object="${frageformular}-->
+		<label for="fragetext" th:text = "#{frageformular.label.frage}">Fragetext:</label>
+		<input type="text" id="fragetext" name="fragetext" th:field="*{fragetext}" > <!-- *{ } Formulardatenbindung wird verwendet, um Daten aus einem HTML-Formular an ein Objekt zu binden // das objekt th:object="${frageformular}-->
 		<span th:if="${#fields.hasErrors('fragetext')}" th:errors="*{fragetext}" class="error-message"></span> 
 		<br><br>
 
-		<label for="richtigeAntwort">Richtige:</label>
-		<input type="text" id="richtigeAntwort" name="richtigeAntwort" th:field="*{richtigeAntwort}" th:errorclass="fehlerFeld">
+		<label for="richtigeAntwort" th:text = "#{frageformular.label.richtigeantwort}">Richtige:</label>
+		<input type="text" id="richtigeAntwort" name="richtigeAntwort" th:field="*{richtigeAntwort}">
 		<span th:if="${#fields.hasErrors('richtigeAntwort')}" th:errors="*{richtigeAntwort}" class="error-message"></span>
 		<br><br>
 		
-		<label for="punktzahl">Punktzahl:</label>
-		<input type="number" id="punktzahl" name="punktzahl" th:field="*{punktzahl}" th:errorclass="fehlerFeld">
-		<span th:if="${#fields.hasErrors('punktzahl')}" th:errors="*{punktzahl}" class="error-message" ></span>
+		<label for="punktzahl" th:text = "#{frageformular.label.punkte}">Punktzahl:</label>
+		<input type="number" id="punktzahl" name="punktzahl" th:field="*{punktzahl}">
+		<span th:if="${#fields.hasErrors('punktzahl')}" th:errors="*{punktzahl}" class="error-message"></span>
         <br><br>
 
-        <h1>Falsche Antworten max. <span th:text="${maxfalsch}"></span></h1>
+        <h1 th:text = "#{frageformular.titel.falscheantworten}">Falsche Antworten max. <span th:text="${maxfalsch}"></span></h1>
 		<span th:if="${#fields.hasErrors('falscheAntworten')}" class="error-message">Liste Darf keine Duplikate enthalten</span>
 			
 		<div id="falscheAntworten">
@@ -51,14 +51,14 @@
 			</div>
 			<!--Einen neuen Eintrag hinzuzufügen, wenn die Anzahl der falschen Antworten noch nicht das Maximum erreicht hat-->
 			<div th:if="${frageformular.falscheAntworten.size() != maxfalsch}">
-				<label th:for="neuerEintrag">Neu:</label>
+				<label th:for="neuerEintrag" th:text = "#{frageformular.label.neuefalschantwort}">Neu:</label>
 				<input type="text" id="neuerEintrag" name="neuerEintrag">
 			</div>
 
 		</div>
 		<br><br>
 
-		<input type="submit" value="Submit">
+		<input type="submit" th:text = "#{frageformular.label.submit}" value="Submit">
 	</form>
 
 </body>
