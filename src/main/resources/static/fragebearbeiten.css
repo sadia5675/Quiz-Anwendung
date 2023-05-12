@@ -32,7 +32,7 @@ input[type="text"], input[type="number"], select {
 }
 
 input[type="submit"] {
-	background-color: #333;
+	background-color: #3761e0;
 	color: #fff;
 	padding: 10px 20px;
 	border: none;
@@ -41,8 +41,19 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-	background-color: #555;
+	background-color: #0e38b4;
 }
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #3761e0;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: #fff;
+}
+
 
 .error-message {
 	color: red;
@@ -61,3 +72,4 @@ input:invalid {
 	border: 2px solid red;
 
 }
+

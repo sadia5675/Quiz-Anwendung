@@ -1,9 +1,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>Frage bearbeiten</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> 
 </head>
 <body>
-	<link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> 
+
+	<div class="header">
+		<h3>QuizVorrichtung</h3>
+		<div class="language-switch">
+			<button>DE</button>
+			<button>NL</button>
+			<button>EN</button>
+		</div>
+	</div>
+
 	<h1>Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> 
 	<form th:action="@{#}" th:method="POST" th:object="${frageformular}">
 		
@@ -31,6 +41,8 @@
         <br><br>
 
         <h1>Falsche Antworten max. <span th:text="${maxfalsch}"></span></h1>
+		<span th:if="${#fields.hasErrors('falscheAntworten')}" class="error-message">Liste Darf keine Duplikate enthalten</span>
+			
 		<div id="falscheAntworten">
 			<!--Schleife, die alle Einträge in der Liste falscheAntworten des frageformular-Objekts durchläuft-->
 			<div th:each="eintrag, iter: ${frageformular.getFalscheAntworten}">
