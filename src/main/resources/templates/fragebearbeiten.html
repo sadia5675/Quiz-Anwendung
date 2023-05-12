@@ -20,23 +20,23 @@
 		<label for="kategorien" th:text = "#{frageformular.label.kategorie}" >kategorie:</label>
 		<select id="kategorien" name="kategorie"> 
 			<!--th:each-Schleife iteriert durch die Kategorien in der Liste und erstellt eine Option für jede Kategorie-->
-			<option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}" th:field="*{kategorie}"></option>
+			<option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}" th:field="*{kategorie}" ></option>
 		</select>
 		<span th:if="${#fields.hasErrors('kategorie')}" th:errors="*{kategorie}" class="error-message"></span>
 		<br><br>
 
 		<label for="fragetext" th:text = "#{frageformular.label.frage}">Fragetext:</label>
-		<input type="text" id="fragetext" name="fragetext" th:field="*{fragetext}" > <!-- *{ } Formulardatenbindung wird verwendet, um Daten aus einem HTML-Formular an ein Objekt zu binden // das objekt th:object="${frageformular}-->
+		<input type="text" id="fragetext" name="fragetext" th:field="*{fragetext}" th:errorclass="fehlerFeld"> <!-- *{ } Formulardatenbindung wird verwendet, um Daten aus einem HTML-Formular an ein Objekt zu binden // das objekt th:object="${frageformular}-->
 		<span th:if="${#fields.hasErrors('fragetext')}" th:errors="*{fragetext}" class="error-message"></span> 
 		<br><br>
 
 		<label for="richtigeAntwort" th:text = "#{frageformular.label.richtigeantwort}">Richtige:</label>
-		<input type="text" id="richtigeAntwort" name="richtigeAntwort" th:field="*{richtigeAntwort}">
+		<input type="text" id="richtigeAntwort" name="richtigeAntwort" th:field="*{richtigeAntwort}" th:errorclass="fehlerFeld">
 		<span th:if="${#fields.hasErrors('richtigeAntwort')}" th:errors="*{richtigeAntwort}" class="error-message"></span>
 		<br><br>
 		
 		<label for="punktzahl" th:text = "#{frageformular.label.punkte}">Punktzahl:</label>
-		<input type="number" id="punktzahl" name="punktzahl" th:field="*{punktzahl}">
+		<input type="number" id="punktzahl" name="punktzahl" th:field="*{punktzahl}"  th:errorclass="fehlerFeld">
 		<span th:if="${#fields.hasErrors('punktzahl')}" th:errors="*{punktzahl}" class="error-message"></span>
         <br><br>
 
