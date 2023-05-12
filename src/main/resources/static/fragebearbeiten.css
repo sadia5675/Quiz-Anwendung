@@ -25,7 +25,6 @@ label {
 
 input[type="text"], input[type="number"], select {
 	padding: 5px;
-	border: 1px solid #ccc;
 	border-radius: 5px;
 	width: calc(100% - 120px);
 	margin-bottom: 10px;
@@ -71,5 +70,9 @@ input:invalid {
 #frageText:invalid, #richtigeAntwort:invalid, #punktzahl:invalid {
 	border: 2px solid red;
 
+}
+
+.fehlerFeld {
+	border: 2px solid red;
 }
 
