@@ -1,4 +1,3 @@
-import csv
 import os
 
 with open("uebersetzungen.csv", "r") as file:

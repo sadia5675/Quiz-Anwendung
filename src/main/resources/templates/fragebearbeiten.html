@@ -6,21 +6,21 @@
 <body>
 
 	<div class="header">
-		<h3>QuizVorrichtung</h3>
+		<h3 th:text = "#{frageformular.titel.quiz}">QuizVorrichtung</h3>
 		<div class="language-switch">
-			<button>DE</button>
-			<button>NL</button>
-			<button>EN</button>
+			<a th:href="@{?sprache=de}">DE</a>
+			<a th:href="@{?sprache=en}">EN</a>
+			<a th:href="@{?sprache=nl}">NL</a>
 		</div>
 	</div>
 
-	<h1 th:text = "#{frageformular.titel.bearbeiten}">Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> 
+	<h1 th:text ="#{frageformular.titel.bearbeiten(${fragenr})}">Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> 
 	<form th:action="@{#}" th:method="POST" th:object="${frageformular}">
 		
-		<label for="kategorien" th:text = "#{frageformular.label.kategorie}" >kategorie:</label>
-		<select id="kategorien" name="kategorie"> 
+		<label for="kategorien" th:text="#{frageformular.label.kategorie}">Kategorie:</label>
+		<select id="kategorien" name="kategorie" th:errorclass="fehlerFeld"> 
 			<!--th:each-Schleife iteriert durch die Kategorien in der Liste und erstellt eine Option für jede Kategorie-->
-			<option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}" th:field="*{kategorie}" ></option>
+			<option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}" th:field="*{kategorie}"></option>
 		</select>
 		<span th:if="${#fields.hasErrors('kategorie')}" th:errors="*{kategorie}" class="error-message"></span>
 		<br><br>
@@ -40,14 +40,14 @@
 		<span th:if="${#fields.hasErrors('punktzahl')}" th:errors="*{punktzahl}" class="error-message"></span>
         <br><br>
 
-        <h1 th:text = "#{frageformular.titel.falscheantworten}">Falsche Antworten max. <span th:text="${maxfalsch}"></span></h1>
-		<span th:if="${#fields.hasErrors('falscheAntworten')}" class="error-message">Liste Darf keine Duplikate enthalten</span>
-			
+        <h1 th:text = "#{frageformular.titel.falscheantworten(${maxfalsch})}">Falsche Antworten max. <span th:text="${maxfalsch}"></span></h1>
+		<span th:if="${#fields.hasErrors('falscheAntworten')}" th:errors="*{falscheAntworten}" class="error-message"></span>
+
 		<div id="falscheAntworten">
 			<!--Schleife, die alle Einträge in der Liste falscheAntworten des frageformular-Objekts durchläuft-->
 			<div th:each="eintrag, iter: ${frageformular.getFalscheAntworten}">
 				<label th:for="'eintrag-' + ${iter.index}"><span th:text="${iter.index + 1}"></span>:</label>
-				<input type="text" id="eintrag" name="eintrag" th:field="*{falscheAntworten[__${iter.index}__]}" th:value="${eintrag}"> <!--th:field-Attribut des Input-Feldes angibt, welches Feld in frageformular dem Input-Feld zugeordnet ist //__${iter.index}__ wird verwendet, um auf den aktuellen Index des Eintrags in der Schleife zuzugreifen-->
+				<input type="text" id="eintrag" name="eintrag" th:field="*{falscheAntworten[__${iter.index}__]}" th:value="${eintrag}" > <!--th:field-Attribut des Input-Feldes angibt, welches Feld in frageformular dem Input-Feld zugeordnet ist //__${iter.index}__ wird verwendet, um auf den aktuellen Index des Eintrags in der Schleife zuzugreifen-->
 			</div>
 			<!--Einen neuen Eintrag hinzuzufügen, wenn die Anzahl der falschen Antworten noch nicht das Maximum erreicht hat-->
 			<div th:if="${frageformular.falscheAntworten.size() != maxfalsch}">
@@ -58,7 +58,7 @@
 		</div>
 		<br><br>
 
-		<input type="submit" th:text = "#{frageformular.label.submit}" value="Submit">
+		<input type="submit" th:value="#{frageformular.label.submit}" />
 	</form>
 
 </body>

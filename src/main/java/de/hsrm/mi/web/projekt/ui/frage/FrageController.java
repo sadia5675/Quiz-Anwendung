@@ -51,15 +51,7 @@ public class FrageController {
                                 @RequestParam(required = false) String neuerEintrag
                                 ){ //@RequestParam(required = false) gibt an, dass der Parameter nicht erforderlich ist//Wenn der Parameter in der Anfrage enthalten ist, wird er an den Controller-Methodenparameter gebunden // view: name="name"
         
-     
-        if(formularErrors.hasErrors()) {
-            m.addAttribute("fragenr",fragenr);
-            m.addAttribute("maxfalsch", MAX_FALSCH);
-            
-            logger.info("Errors = {}", formularErrors);
-            return "fragebearbeiten";
-        }
-            
+       
         //Mit removeIf() wird jedes Element aus der Liste entfernt, das leer ist               
         formular.getFalscheAntworten().removeIf(eintrag -> eintrag.isEmpty());
         // prüft, ob die Anzahl der falschen Antworten im Frageformular nicht bereits das maximale Limit erreicht hat
@@ -72,6 +64,16 @@ public class FrageController {
 
         m.addAttribute("fragenr",fragenr);      
         m.addAttribute("maxfalsch", MAX_FALSCH);
+
+
+        if(formularErrors.hasErrors()) {
+            m.addAttribute("fragenr",fragenr);
+            m.addAttribute("maxfalsch", MAX_FALSCH);
+            
+            logger.info("Errors = {}", formularErrors);
+            return "fragebearbeiten";
+        }
+
 
         logger.info("falsche Antworten = {}", formular.getFalscheAntworten());
         

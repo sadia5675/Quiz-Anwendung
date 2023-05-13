@@ -24,7 +24,6 @@ public class VerschiedenValidator implements ConstraintValidator<Verschieden, Li
         /* 
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'isValid'");
-        
         */
 
     }

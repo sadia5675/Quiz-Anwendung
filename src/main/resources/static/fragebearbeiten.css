@@ -53,6 +53,16 @@ input[type="submit"]:hover {
 	color: #fff;
 }
 
+.header a {
+	color: #fff;
+	text-decoration: none;
+	margin-right: 10px;
+}
+
+.header a:hover {
+	color: #ccc;
+}
+
 
 .error-message {
 	color: red;

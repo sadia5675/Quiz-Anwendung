@@ -10,22 +10,23 @@ import jakarta.validation.constraints.Size;
 
 public class FrageFormular {
 
-    @NotBlank(message="Kategorie darf nicht leer sein")
+    @NotBlank(message="{frageformular.fehler.leer}")
     private String kategorie;
     
-    @NotBlank(message="Kategorie darf nicht leer sein")
-    @Size(min = 5, max = 80, message="Länge muss von {min} bis {max} sein")
+    @NotBlank(message="{frageformular.fragetext}")
+    @Size(min = 5, max = 80, message="{frageformular.fehler.laenge}")
     private String fragetext;
 
-    @NotBlank(message="Kategorie darf nicht leer sein")
-    @Size(min = 1, max = 80, message="Die Länge muss von {min} bis {max} sein")
+    @NotBlank(message="{frageformular.fehler.leer}")
+    @Size(min = 1, max = 80, message="{frageformular.fehler.laenge}")
     private String richtigeAntwort;
 
-    @Min(value = 0, message = "Die Punktzahl darf nicht negativ sein.")
-    @Max(value = 17, message = "Die Punktzahl darf maximal 17 sein.") 
+    @Min(value = 0, message = "{frageformular.fehler.negativPunkte}")
+    @Max(value = 17, message = "{frageformular.fehler.kleinerAlsPunkte}") 
     private int punktzahl;
 
-    @Verschieden(message = "{validators.verschieden}")
+    @Verschieden
+    @Size(min=1, message="{frageformular.fehler.falschantworten.leer}")
     private ArrayList<String> falscheAntworten = new ArrayList<>();
 
     
