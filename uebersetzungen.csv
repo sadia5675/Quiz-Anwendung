@@ -1,5 +1,6 @@
 propertyname;de;en;nl
 frageformular.titel.quiz;QuizVorrichtung;QuizDevice;QuizApparaat
+frageformular.fragetext;bitte geben Sie eine Frage ein;please enter a question;geef en vraag aan, aub
 frageformular.fehler.laenge;Größe muss zwischen {min} und {max} sein;size must be between {min} and {max};grootte moet tussen {min} en {max} liggen
 frageformular.fehler.leer;darf nicht leer sein;must not be blank;mag niet onbeschreven zijn
 frageformular.fehler.negativPunkte;keine negativen Zahlen;can't have negative values;geen negatieve getallen
