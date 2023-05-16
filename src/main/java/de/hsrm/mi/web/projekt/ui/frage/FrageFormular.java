@@ -2,6 +2,7 @@ package de.hsrm.mi.web.projekt.ui.frage;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hsrm.mi.web.projekt.entities.frage.Frage;
 import de.hsrm.mi.web.projekt.validators.Verschieden;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -83,4 +84,27 @@ public class FrageFormular {
     public void addFalscheAntwort(String antwort) {
         falscheAntworten.add(antwort);
     }
+    
+    public void setFalscheAntworten(ArrayList<String> falscheAntworten) {
+        this.falscheAntworten = falscheAntworten;
+    }
+
+    //Die Methode toFrage kopiert die Daten aus dem FrageFormular-Objekt in das übergebene Frage-Objekt
+    public void toFrage(Frage f) {
+        f.setKategorie(this.kategorie);
+        f.setFragetext(this.fragetext);
+        f.setPunktzahl(this.punktzahl);
+        f.setRichtigeAntwort(this.richtigeAntwort);
+        f.setFalscheAntworten(this.falscheAntworten);
+    }
+    
+    //Die Methode fromFrage kopiert die Daten aus dem übergebenen Frage-Objekt in das FrageFormular-Objekt
+    public void fromFrage(Frage f) {
+        this.kategorie = f.getKategorie();
+        this.fragetext = f.getFragetext();
+        this.punktzahl = f.getPunktzahl();
+        this.richtigeAntwort = f.getRichtigeAntwort();
+        this.falscheAntworten = new ArrayList<>(f.getFalscheAntworten());
+}
+
 }

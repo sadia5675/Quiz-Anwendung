@@ -1,6 +1,5 @@
 package de.hsrm.mi.web.projekt.ui.frage;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -16,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Controller
-@RequestMapping("/frage")//Gibt an, dass alle Handler-Methoden in diesem Controller auf den Pfad /frage mappen werden (URLs mit /frage), an diesen Controller weitergeleitet werden //wird auf die gesamten FrageController angewendet
 @SessionAttributes("frageformular")//gibt an welche Attribute auf Serverseite gespeichert und über mehrere Anfragen hinweg verfügbar sein sollen // hier wird das Attribut mit "${frageformular}" in der Sitzung beibehalten
 public class FrageController {
     private static final int MAX_FALSCH = 4;
@@ -32,7 +30,7 @@ public class FrageController {
     }
 
     //wenn eine GET-Anfrage an die URL "/frage/{fragenr}" gesendet wird, wird die Methode aufgerufen
-    @GetMapping("{fragenr}") 
+    @GetMapping("/frage/{fragenr}") 
     public String anzeigen(@PathVariable String fragenr, //@PathVariable um eine Variable aus der URL-Anfrage zu extrahieren und sie als Methodeparameter zu übergeben
                             Model m, 
                             @ModelAttribute("frageformular") FrageFormular formular){ 
@@ -43,7 +41,7 @@ public class FrageController {
     }
          
     //Verarbeitungsmethode für eine HTTP-POST-Anfrage an die URL "/frage/{fragenr}" //kann in der Anfrage enthaltene Variable zugreifen
-    @PostMapping("{fragenr}")
+    @PostMapping("/frage/{fragenr}")
     public String formular_post(@PathVariable String fragenr,
                                 Model m,
                                 @Valid @ModelAttribute("frageformular") FrageFormular formular,
