@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fragesammlung</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> 
+</head>
+<body>
+
+    <div class="header">
+		<h3>QuizVorrichtung</h3>
+		<div class="language-switch">
+			<a th:href="@{?sprache=de}">DE</a>
+			<a th:href="@{?sprache=en}">EN</a>
+			<a th:href="@{?sprache=nl}">NL</a>
+		</div>
+	</div>
+
+    <h1 th:text = "#{frageliste.titel}">Fragesammlung</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th th:text = "#{frageliste.spalte.id}">ID</th>
+                <th th:text = "#{frageliste.spalte.kategorie}">Kategorie</th>
+                <th th:text = "#{frageliste.spalte.fragetext}">Frage</th>
+                <th th:text = "#{frageliste.spalte.punkte}">Punkte</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="frage : ${fragen}"> <!--vom FrageController bekommt er die info: m.addAttribute("fragen", fragen);-->
+                <td th:text="${frage.id}"></td>
+                <td th:text="${frage.kategorie}"></td>
+                <td th:text="${frage.fragetext}"></td>
+                <td th:text="${frage.punktzahl}"></td>
+                <!--{id} ist die ID der Frage aus der entsprechenden Zeile-->
+                <td><a th:href="@{/frage/{id}(id=${frage.id})}" class ="bearbeiten-link"><span th:text="#{frageliste.eintrag.bearbeiten}">Bearbeiten</span></a></td>
+                <td><a th:href="@{/frage/{id}/del(id=${frage.id})}" class ="loeschen-link"><span th:text="#{frageliste.eintrag.loeschen}">Löschen</span></a></td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/frage/0}" class="neueFrage-link"><span th:text="#{frageliste.neue.frage}">Neue Frage</span></a>
+</body>
+</html>

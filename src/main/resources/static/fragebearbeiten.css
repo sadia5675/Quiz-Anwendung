@@ -86,3 +86,71 @@ input:invalid {
 	border: 2px solid red;
 }
 
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+th {
+    background-color: #eee;
+}
+
+a {
+    color: #3761e0;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0e38b4;
+}
+
+.neueFrage-link {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #3761e0;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 5px;
+  }
+  
+  .neueFrage-link:hover {
+	background-color: #0e38b4;
+	color: #fff;
+  }
+
+  .bearbeiten-link {
+	display: inline-block;
+	border: 1px solid lightseagreen;
+	padding: 5px 10px;
+	border-radius: 5px;
+	color: lightseagreen;
+	text-decoration: none;
+  }
+
+  .bearbeiten-link:hover {
+	background-color: lightseagreen;
+	color: white;
+  }
+  
+  .loeschen-link {
+	display: inline-block;
+	border: 1px solid red;
+	padding: 5px 10px;
+	border-radius: 5px;
+	color: red;
+	text-decoration: none;
+  }
+
+  .loeschen-link:hover {
+	background-color: red;
+	color: white;
+  }
+

@@ -11,19 +11,19 @@ import jakarta.validation.constraints.Size;
 
 public class FrageFormular {
 
-    @NotBlank(message="{frageformular.fehler.leer}")
+    @NotBlank
     private String kategorie;
     
-    @NotBlank(message="{frageformular.fragetext}")
-    @Size(min = 5, max = 80, message="{frageformular.fehler.laenge}")
+    @NotBlank
+    @Size(min = 5, max = 80)
     private String fragetext;
 
-    @NotBlank(message="{frageformular.fehler.leer}")
-    @Size(min = 1, max = 80, message="{frageformular.fehler.laenge}")
+    @NotBlank
+    @Size(min = 1, max = 80)
     private String richtigeAntwort;
 
-    @Min(value = 0, message = "{frageformular.fehler.negativPunkte}")
-    @Max(value = 17, message = "{frageformular.fehler.kleinerAlsPunkte}") 
+    @Min(value = 0)
+    @Max(value = 17) 
     private int punktzahl;
 
     @Verschieden

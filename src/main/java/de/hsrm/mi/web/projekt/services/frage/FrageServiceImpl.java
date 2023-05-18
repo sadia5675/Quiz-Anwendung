@@ -18,7 +18,8 @@ public class FrageServiceImpl implements FrageService {
     private final FrageRepository frageRepository;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FrageServiceImpl.class);
-
+    
+    //Instanz des FrageRepository automatisch erstellt
     @Autowired
     public FrageServiceImpl(FrageRepository frageRepository) {
         this.frageRepository = frageRepository;
