@@ -3,21 +3,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import de.hsrm.mi.web.projekt.entities.frage.Frage;
 import de.hsrm.mi.web.projekt.services.frage.FrageService;
 import jakarta.validation.Valid;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +33,8 @@ public class FrageController {
         FrageFormular formular = new FrageFormular();
         m.addAttribute("frageformular", formular);
     }
+
+    //----------------------------------------------GET MAPPING---------------------------------------------------------------------------------
 
     @ModelAttribute("frage")
     public Frage initFrage() {
@@ -83,7 +81,10 @@ public class FrageController {
         m.addAttribute("maxfalsch", MAX_FALSCH);
         return "fragebearbeiten"; // gibt die View mit dem Namen "fragebearbeiten" zurück
     }
-         
+
+    
+    //----------------------------------------------POST MAPPING-------------------------------------------------------------------------------------------
+
     //Verarbeitungsmethode für eine HTTP-POST-Anfrage an die URL "/frage/{fragenr}" //kann in der Anfrage enthaltene Variable zugreifen
     @PostMapping("/frage/{fragenr}")
     public String formular_post(@PathVariable int fragenr,

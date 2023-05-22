@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kategorien</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}"> 
+</head>
+<body>
+
+    <div class="header">
+		<h3>QuizVorrichtung</h3>
+        <div class="navigation">
+            <a th:href="@{/kategorien}">Kategorien</a>
+            <a th:href="@{/frage}">Fragen</a>
+            <a href="#">Quizes</a>
+        </div>
+		<div class="language-switch">
+			<a th:href="@{?sprache=de}">DE</a>
+			<a th:href="@{?sprache=en}">EN</a>
+			<a th:href="@{?sprache=nl}">NL</a>
+		</div>
+	</div>
+
+    <h1 th:text = "#{kategorien.titel}">Kategorien</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th th:text = "#{kategorien.spalte.id}">ID</th>
+                <th th:text = "#{kategorien.spalte.name}">Name</th>
+                <th th:text = "#{kategorien.spalte.beschreinung}">Beschreibung</th>
+                <th th:text = "#{kategorien.spalte.fragen}">Fragen</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="kategorie : ${kategorien}"> 
+                <td th:text="${kategorie.id}"></td>
+                <td th:text="${kategorie.name}"></td>
+                <td th:text="${kategorie.beschreibung}"></td>
+                <td><a th:href="@{/kategorie/{id}(id=${kategorie.id})}" class ="bearbeiten-link"><span th:text="#{kategorien.eintrag.bearbeiten}">Bearbeiten</span></a></td>
+                <td><a th:href="@{/kategorie/{id}/del(id=${kategorie.id})}" class ="loeschen-link"><span th:text="#{kategorieneintrag.loeschen}">Löschen</span></a></td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/kategorie/0}" class="neueKategorie-link"><span th:text="#{kategorien.neue.kategorie}">Neue Kategorie</span></a>
+</body>
+</html>
