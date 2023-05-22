@@ -46,7 +46,7 @@ public class KategorieController {
         return "kategorien";  // Anschließend wird die View "kategorien" zurückgegeben
     }
 
-    @GetMapping("/frage/{id}/del")
+    @GetMapping("/kategorie/{id}/del")
     public String deleteKategorie(@PathVariable("id") Long id){
         kategorieService.loescheKategorie(id);
         return "redirect:/kategorien";
@@ -82,7 +82,7 @@ public class KategorieController {
 
 //----------------------------------------------POST MAPPING---------------------------------------------------------------------------------------
 
-
+    
     @PostMapping("/kategorie/{id}")
     public String formular_post(@PathVariable long id,
                                 Model m,
@@ -115,7 +115,7 @@ public class KategorieController {
         }
     }
 
-
+    
 
 
 
