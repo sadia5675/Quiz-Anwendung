@@ -14,6 +14,8 @@ public class KategorieServiceImpl implements KategorieService {
 
     private final KategorieRepository kategorieRepository;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(KategorieServiceImpl.class);
+
     @Autowired
     public KategorieServiceImpl(KategorieRepository kategorieRepository) {
         this.kategorieRepository = kategorieRepository;
@@ -24,7 +26,7 @@ public class KategorieServiceImpl implements KategorieService {
     public List<Kategorie> holeAlleKategorien() {
 
         List<Kategorie> kategorien = kategorieRepository.findAll();
-        //LOGGER.info("Alle Kategorien wurden abgerufen."); 
+        LOGGER.info("Alle Kategorien wurden abgerufen."); 
         return kategorien;
     }
 
@@ -34,9 +36,9 @@ public class KategorieServiceImpl implements KategorieService {
         Optional<Kategorie> kategorie = kategorieRepository.findById(id);
 
         if (kategorie.isPresent()) {
-           // LOGGER.info("Kategorie mit ID {} wurde gefunden.", id);
+           LOGGER.info("Kategorie mit ID {} wurde gefunden.", id);
         } else {
-           // LOGGER.info("Kategorie mit ID {} wurde nicht gefunden.", id);
+           LOGGER.info("Kategorie mit ID {} wurde nicht gefunden.", id);
         }
         
         return kategorie;
@@ -46,7 +48,7 @@ public class KategorieServiceImpl implements KategorieService {
     public Kategorie speichereKategorie(Kategorie k) {
         
         Kategorie gespeicherteKategorie = kategorieRepository.save(k);
-        //LOGGER.info("Kategorie mit ID {} wurde gespeichert.", gespeicherteKategorie.getId());
+        LOGGER.info("Kategorie mit ID {} wurde gespeichert.", gespeicherteKategorie.getId());
         return gespeicherteKategorie;
     }
 
@@ -54,7 +56,7 @@ public class KategorieServiceImpl implements KategorieService {
     public void loescheKategorie(long id) {
         
         kategorieRepository.deleteById(id);
-        //LOGGER.info("Kategorie mit ID {} wurde gelöscht.", id);
+        LOGGER.info("Kategorie mit ID {} wurde gelöscht.", id);
     }
     
     
