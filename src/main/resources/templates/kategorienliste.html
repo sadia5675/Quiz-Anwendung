@@ -21,15 +21,15 @@
 		</div>
 	</div>
 
-    <h1 th:text = "#{kategorien.titel}">Kategorien</h1>
+    <h1 th:text = "#{kategorieliste.titel}">Kategorien</h1>
     
     <table>
         <thead>
             <tr>
-                <th th:text = "#{kategorien.spalte.id}">ID</th>
-                <th th:text = "#{kategorien.spalte.name}">Name</th>
-                <th th:text = "#{kategorien.spalte.beschreinung}">Beschreibung</th>
-                <th th:text = "#{kategorien.spalte.fragen}">Fragen</th>
+                <th th:text = "#{kategorieliste.spalte.id}">ID</th>
+                <th th:text = "#{kategorieliste.spalte.name}">Name</th>
+                <th th:text = "#{kategorieliste.spalte.beschreibung}">Beschreibung</th>
+                <th th:text = "#{kategorieliste.spalte.anzahlfragen}">Fragen</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -44,6 +44,6 @@
             </tr>
         </tbody>
     </table>
-    <a th:href="@{/kategorie/0}" class="neueKategorie-link"><span th:text="#{kategorien.neue.kategorie}">Neue Kategorie</span></a>
+    <a th:href="@{/kategorie/0}" class="neueFrage-link"><span th:text="#{kategorieliste.neue.kategorie}">Neue Kategorie</span></a>
 </body>
 </html>

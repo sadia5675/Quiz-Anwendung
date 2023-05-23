@@ -24,7 +24,7 @@ public class KategorieServiceImpl implements KategorieService {
     public List<Kategorie> holeAlleKategorien() {
 
         List<Kategorie> kategorien = kategorieRepository.findAll();
-        //LOGGER.info("Alle Kategorien wurden abgerufen."); WARUM FUNKTIONIERT LOGGER NICHT!!!!
+        //LOGGER.info("Alle Kategorien wurden abgerufen."); 
         return kategorien;
     }
 
@@ -32,6 +32,13 @@ public class KategorieServiceImpl implements KategorieService {
     public Optional<Kategorie> holeKategorieMitId(long id) {
 
         Optional<Kategorie> kategorie = kategorieRepository.findById(id);
+
+        if (kategorie.isPresent()) {
+           // LOGGER.info("Kategorie mit ID {} wurde gefunden.", id);
+        } else {
+           // LOGGER.info("Kategorie mit ID {} wurde nicht gefunden.", id);
+        }
+        
         return kategorie;
     }
 
@@ -39,6 +46,7 @@ public class KategorieServiceImpl implements KategorieService {
     public Kategorie speichereKategorie(Kategorie k) {
         
         Kategorie gespeicherteKategorie = kategorieRepository.save(k);
+        //LOGGER.info("Kategorie mit ID {} wurde gespeichert.", gespeicherteKategorie.getId());
         return gespeicherteKategorie;
     }
 
@@ -46,6 +54,7 @@ public class KategorieServiceImpl implements KategorieService {
     public void loescheKategorie(long id) {
         
         kategorieRepository.deleteById(id);
+        //LOGGER.info("Kategorie mit ID {} wurde gelöscht.", id);
     }
     
     

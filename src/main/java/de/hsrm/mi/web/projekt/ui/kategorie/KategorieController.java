@@ -1,10 +1,13 @@
 package de.hsrm.mi.web.projekt.ui.kategorie;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie;
 import de.hsrm.mi.web.projekt.services.kategorie.KategorieService;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +25,9 @@ public class KategorieController {
 
 
     @ModelAttribute("kategorieFormular") 
-    public void initFrageFormular(Model m){ //ie Übermittlung von Daten zwischen der Controller-Schicht: addAttribute() und der View-Schicht : th:text="${key}"
+    public void initFrageFormular(Model m){ 
         KategorieFormular formular = new KategorieFormular();
-        m.addAttribute("frageformular", formular);
+        m.addAttribute("kategorieFormular", formular);
     }
 
 
@@ -43,7 +46,7 @@ public class KategorieController {
     public String kategorienListe(Model m) {
         List<Kategorie> kategorien = kategorieService.holeAlleKategorien(); //  Die Liste der Kategorien wird dem Model mit dem Attributsnamen "kategorien" hinzugefügt
         m.addAttribute("kategorien", kategorien);
-        return "kategorien";  // Anschließend wird die View "kategorien" zurückgegeben
+        return "kategorienliste";  // Anschließend wird die View "kategorien" zurückgegeben
     }
 
     @GetMapping("/kategorie/{id}/del")
@@ -114,7 +117,9 @@ public class KategorieController {
             }
         }
     }
+    
 
+ 
     
 
 
