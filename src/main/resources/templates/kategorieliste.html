@@ -10,9 +10,9 @@
     <div class="header">
 		<h3>QuizVorrichtung</h3>
         <div class="navigation">
-            <a th:href="@{/kategorien}">Kategorien</a>
-            <a th:href="@{/frage}">Fragen</a>
-            <a href="#">Quizes</a>
+            <a th:href="@{/kategorie}" th:text="#{nav.kategorie}">Kategorien</a>
+            <a th:href="@{/frage}" th:text="#{nav.frageliste}">Fragen</a>
+            <a href="#" th:text="#{nav.quizliste}">Quizes</a>
         </div>
 		<div class="language-switch">
 			<a th:href="@{?sprache=de}">DE</a>
@@ -39,8 +39,10 @@
                 <td th:text="${kategorie.id}"></td>
                 <td th:text="${kategorie.name}"></td>
                 <td th:text="${kategorie.beschreibung}"></td>
-                <td><a th:href="@{/kategorie/{id}(id=${kategorie.id})}" class ="bearbeiten-link"><span th:text="#{kategorien.eintrag.bearbeiten}">Bearbeiten</span></a></td>
-                <td><a th:href="@{/kategorie/{id}/del(id=${kategorie.id})}" class ="loeschen-link"><span th:text="#{kategorieneintrag.loeschen}">Löschen</span></a></td>
+                <td th:text="${kategorie.fragen.size()}"></td>
+                
+                <td><a th:href="@{/kategorie/{id}(id=${kategorie.id})}" class ="bearbeiten-link"><span th:text="#{kategorieliste.eintrag.bearbeiten}">Bearbeiten</span></a></td>
+                <td><a th:href="@{/kategorie/{id}/del(id=${kategorie.id})}" class ="loeschen-link"><span th:text="#{kategorieliste.eintrag.loeschen}">Löschen</span></a></td>
             </tr>
         </tbody>
     </table>

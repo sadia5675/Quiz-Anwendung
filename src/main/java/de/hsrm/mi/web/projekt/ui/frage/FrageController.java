@@ -3,8 +3,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie;
 import de.hsrm.mi.web.projekt.entities.frage.Frage;
 import de.hsrm.mi.web.projekt.services.frage.FrageService;
+import de.hsrm.mi.web.projekt.services.kategorie.KategorieService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +28,10 @@ public class FrageController {
     
     //Instanz von FrageServiceImpl automatisch erstellt 
     @Autowired private FrageService frageService;
+
+    @Autowired
+    private KategorieService kategorieService;
+
     
     //Diese Methode wird jedes Mal aufgerufen, wenn der Controller eine Anforderung empfängt 
     //Dadurch können andere Methoden im Controller auf das FrageFormular-Objekt zugreifen, indem sie den Parameter @ModelAttribute("frageformular") FrageFormular formular in ihren Methodenaufrufen deklarieren
@@ -34,12 +41,17 @@ public class FrageController {
         m.addAttribute("frageformular", formular);
     }
 
-    //----------------------------------------------GET MAPPING---------------------------------------------------------------------------------
-
     @ModelAttribute("frage")
     public Frage initFrage() {
         return new Frage();
     }
+
+    @ModelAttribute("kategorien")
+    public List<Kategorie> initKategorien() {
+        return kategorieService.holeAlleKategorien();
+    }
+
+    //----------------------------------------------GET MAPPING---------------------------------------------------------------------------------
 
     //sortierte Liste aller Fragen nach Kategorie und Punktzahl zu erhalten und in frageliste.html anzuzeigen 
     @GetMapping("/frage")

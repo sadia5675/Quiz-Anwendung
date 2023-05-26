@@ -8,9 +8,9 @@
 	<div class="header">
 		<h3>QuizVorrichtung</h3>
 		<div class="navigation">
-            <a th:href="@{/kategorien}">Kategorien</a>
-            <a th:href="@{/frage}">Fragen</a>
-            <a href="#">Quizes</a>
+            <a th:href="@{/kategorie}" th:text="#{nav.kategorie}">Kategorien</a>
+            <a th:href="@{/frage}" th:text="#{nav.frageliste}">Fragen</a>
+            <a href="#" th:text="#{nav.quizliste}">Quizes</a>
         </div>
 		<div class="language-switch">
 			<a th:href="@{?sprache=de}">DE</a>
@@ -25,7 +25,7 @@
 		<label for="kategorien" th:text="#{frageformular.label.kategorie}">Kategorie:</label>
 		<select id="kategorien" name="kategorie" th:errorclass="fehlerFeld"> 
 			<!--th:each-Schleife iteriert durch die Kategorien in der Liste und erstellt eine Option für jede Kategorie-->
-			<option th:each="kat : ${frageformular.kategorien}" th:value="${kat}" th:text="${kat}" th:field="*{kategorie}"></option>
+			 <option th:each="kategorie : ${kategorien}" th:value="${kategorie.id}" th:text="${kategorie.name}" th:field="*{kategorie}"></option>   
 		</select>
 		<span th:if="${#fields.hasErrors('kategorie')}" th:errors="*{kategorie}" class="error-message"></span>
 		<br><br>

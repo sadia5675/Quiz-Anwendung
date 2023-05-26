@@ -11,5 +11,5 @@ public interface KategorieService {
     Optional<Kategorie> holeKategorieMitId(long id);
     Kategorie speichereKategorie(Kategorie k);
     void loescheKategorie(long id);
-    
+    int getAnzahlFragen(Kategorie kategorie);
     }

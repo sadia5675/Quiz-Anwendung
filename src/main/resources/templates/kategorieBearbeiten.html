@@ -9,10 +9,11 @@
     <div class="header">
         <h3>QuizVorrichtung</h3>
         <div class="navigation">
-            <a th:href="@{/kategorien}">Kategorien</a>
-            <a th:href="@{/frage}">Fragen</a>
-            <a href="#">Quizes</a>
+            <a th:href="@{/kategorie}" th:text="#{nav.kategorie}">Kategorien</a>
+            <a th:href="@{/frage}" th:text="#{nav.frageliste}">Fragen</a>
+            <a href="#" th:text="#{nav.quizliste}">Quizes</a>
         </div>
+        
         <div class="language-switch">
             <a th:href="@{?sprache=de}">DE</a>
             <a th:href="@{?sprache=en}">EN</a>
@@ -22,7 +23,7 @@
 
     <h1 th:text="#{kategorieformular.titel(kategorie.id)}">Bearbeite Kategorie [{kategorie.id}]</h1>
 
-    <form th:action="@{#}" th:object="${kategorie}" method="POST">
+    <form th:action="@{/kategorie/} + ${id}" th:object="${kategorieFormular}" method="POST">
         
             <label for="name" th:text="#{kategorieformular.label.name}">Name:</label>
             <input type="text" id="kategorieName" name="kategoriename" th:field="*{name}">
@@ -36,6 +37,17 @@
         
     </form>
     
+    <h2 th:text = "#{kategorieformular.frageliste.titel}">Fragen</h2>
+    <table>
+        <tbody>
+            <tr th:each="frage : ${kategorie.fragen}">
+                <td th:text="${frage.id}"></td>
+                <td><a th:href="@{/frage/{id}(id=${frage.id})}" th:text="${frage.fragetext}"></a></td>
+                <td th:text="${frage.punktzahl}"></td>
+            </tr>
+        </tbody>
+    </table>
+
 
 
     

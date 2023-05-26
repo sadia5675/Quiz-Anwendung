@@ -7,6 +7,7 @@ import de.hsrm.mi.web.projekt.entities.frage.Frage;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -30,7 +31,8 @@ public class Kategorie {
     @NotNull
     private String beschreibung;
 
-    @OneToMany(mappedBy = "kategorie", cascade = CascadeType.ALL, orphanRemoval = true) //zu einer (one) Kategorie gehören beliebig viele (many) Fragen
+    //zu einer (one) Kategorie gehören beliebig viele (many) Fragen
+    @OneToMany(mappedBy = "kategorie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER) 
     private List<Frage> fragen = new ArrayList<>();
     
 
@@ -64,13 +66,27 @@ public class Kategorie {
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
     }
-
+    
     public List<Frage> getFragen() {
         return fragen;
     }
 
     public void setFragen(List<Frage> fragen) {
         this.fragen = fragen;
+    }
+
+    public int getAnzahlFragen() {
+        return fragen.size();
+    }
+
+    public void addFrage(Frage neueFrage) {
+        fragen.add(neueFrage);
+        neueFrage.setKategorie(this);
+    }
+
+    public void removeFrage(Frage frage) {
+        fragen.remove(frage);
+        frage.setKategorie(null);
     }
 
 

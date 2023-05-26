@@ -10,9 +10,9 @@
     <div class="header">
 		<h3>QuizVorrichtung</h3>
         <div class="navigation">
-            <a th:href="@{/kategorien}">Kategorien</a>
-            <a th:href="@{/frage}">Fragen</a>
-            <a href="#">Quizes</a>
+            <a th:href="@{/kategorie}" th:text="#{nav.kategorie}">Kategorien</a>
+            <a th:href="@{/frage}" th:text="#{nav.frageliste}">Fragen</a>
+            <a href="#" th:text="#{nav.quizliste}">Quizes</a>
         </div>
 		<div class="language-switch">
 			<a th:href="@{?sprache=de}">DE</a>
@@ -37,7 +37,7 @@
         <tbody>
             <tr th:each="frage : ${fragen}"> <!--vom FrageController bekommt er die info: m.addAttribute("fragen", fragen);-->
                 <td th:text="${frage.id}"></td>
-                <td th:text="${frage.kategorie}"></td>
+                <td th:text="${frage.kategorie.name}"></td>
                 <td th:text="${frage.fragetext}"></td>
                 <td th:text="${frage.punktzahl}"></td>
                 <!--{id} ist die ID der Frage aus der entsprechenden Zeile-->
