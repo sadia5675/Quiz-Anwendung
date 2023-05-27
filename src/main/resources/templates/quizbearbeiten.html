@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz bearbeitung</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}">
+</head>
+<body>
+
+    <div class="header">
+        <h3>QuizVorrichtung</h3>
+        <div class="navigation">
+            <a th:href="@{/kategorien}">Kategorien</a>
+            <a th:href="@{/frage}">Fragen</a>
+            <a th:href="@{/quiz}">Quizze</a>
+        </div>
+        <div class="language-switch">
+            <a th:href="@{?sprache=de}">DE</a>
+            <a th:href="@{?sprache=en}">EN</a>
+            <a th:href="@{?sprache=nl}">NL</a>
+        </div>
+    </div>
+
+    <h1 th:text = "#{quizformular.titel.bearbeiten}">Quiz-Bearbeitung</h1>
+
+    <form form th:action="@{#}" th:method="POST" th:object="${quizFormular}">
+    
+        <label for="titel" th:text = "#{quizformular.label.quiztitel}">Titel:</label>
+        <input type="text"  name="titel" id="titel" th:field="*{titel}" th:errorclass="fehlerFeld">
+        <span th:if="${#fields.hasErrors('titel')}" th:errors="*{titel}" class="error-message2"></span>
+        <br><br>
+
+        <table>
+            <tbody>
+              <tr th:each="frage : ${fragen}">
+                <td>
+                  <input type="checkbox" th:field="*{ausgewaehlteFragen}" th:value="${frage.id}" />
+                </td>
+                <td th:text="${frage.kategorie}"></td>
+                <td th:text="${frage.fragetext}"></td>
+                <td th:text="${frage.punktzahl}"></td>
+              </tr>
+            </tbody>
+        </table>
+        <span th:if="${#fields.hasErrors('ausgewaehlteFragen')}" th:errors="*{ausgewaehlteFragen}" class="error-message2"></span>
+        <br><br>
+
+        <input type="submit" class="neueFrage-link" th:value="#{quizformular.label.submit}" />
+    </form>
+</body>
+</html>

@@ -72,12 +72,19 @@ input[type="submit"]:hover {
 	
 }
 
+.error-message2 {
+	color: red;
+	display: block; 
+    font-size: 0.8em; 
+	
+}
+
 input:invalid {
 	border: 2px solid red;
 	
 }
 
-#frageText:invalid, #richtigeAntwort:invalid, #punktzahl:invalid {
+#frageText:invalid, #richtigeAntwort:invalid, #punktzahl:invalid ,#titel:invalid{
 	border: 2px solid red;
 
 }
