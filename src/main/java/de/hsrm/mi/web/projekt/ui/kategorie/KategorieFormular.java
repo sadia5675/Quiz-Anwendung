@@ -2,6 +2,10 @@ package de.hsrm.mi.web.projekt.ui.kategorie;
 import de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie;
 import jakarta.validation.constraints.NotBlank;
 
+/**
+@author Ana-Maria Adanaia
+ */
+
 public class KategorieFormular {
 
     @NotBlank

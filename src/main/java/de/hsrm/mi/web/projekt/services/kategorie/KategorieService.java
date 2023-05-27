@@ -1,9 +1,11 @@
 package de.hsrm.mi.web.projekt.services.kategorie;
-
 import java.util.List;
 import java.util.Optional;
-
 import de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie;
+
+/**
+@author Ana-Maria Adanaia
+ */
 
 public interface KategorieService {
     

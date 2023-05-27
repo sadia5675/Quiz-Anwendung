@@ -4,8 +4,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie;
+import de.hsrm.mi.web.projekt.entities.frage.Frage;
+import de.hsrm.mi.web.projekt.services.frage.FrageService;
 import de.hsrm.mi.web.projekt.services.kategorie.KategorieService;
-
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,13 +15,22 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+/**
+@author Ana-Maria Adanaia
+ */
+
+ 
 @Controller
 @SessionAttributes({"kategorieFormular","kategorie"})
 public class KategorieController {
 
     @Autowired private KategorieService kategorieService;
+    @Autowired private FrageService frageService;
 
+    private static final Logger logger = LoggerFactory.getLogger(KategorieController.class); 
 
     @ModelAttribute("kategorieFormular") 
     public void initFrageFormular(Model m){ 
@@ -58,11 +69,14 @@ public class KategorieController {
                            Model m,
                            @ModelAttribute("kategorieFormular") KategorieFormular formular,
                            @ModelAttribute("kategorie") Kategorie kategorie) {
-            
+    
+    List<Frage> fragen = frageService.holeAlleFragen();
+    m.addAttribute("fragen", fragen); 
+
     if (id == 0) {
         formular = new KategorieFormular(); // Neue leere KategorieFormular wird erstellt und der Variable "formular" zugewiesen
         m.addAttribute("kategorieFormular", formular); //"formular" wird als Attribut mit dem Namen "kategorieFormular" dem Model m hinzugefügt. Damit kann das Formular in der View verwendet werden.
-        m.addAttribute("kategorien", new Kategorie()); // Neue leere Kategorie wird erstellt und mit dem Namen "kategorie" dem Model m hinzugefügt
+        m.addAttribute("kategorie", new Kategorie()); // Neue leere Kategorie wird erstellt und mit dem Namen "kategorie" dem Model m hinzugefügt
     }
     
     if (id > 0) {
@@ -74,7 +88,7 @@ public class KategorieController {
         }
     }
     
-    m.addAttribute("kategorienr", id);
+   
     return "kategoriebearbeiten"; // Die View mit dem Namen "kategoriebearbeiten" zurückgeben
 }
 
@@ -86,15 +100,17 @@ public class KategorieController {
     @PostMapping("/kategorie/{id}")
     public String formular_post(@PathVariable long id,
                                 Model m,
-                                @ModelAttribute("kategorieFormular") KategorieFormular formular,
+                                @Valid @ModelAttribute("kategorieFormular") KategorieFormular formular,
                                 BindingResult formularErrors,
                                 @ModelAttribute("kategorie") Kategorie kategorie
                                 ) {
 
         
+        List<Frage> fragen = frageService.holeAlleFragen();
+        m.addAttribute("fragen", fragen); 
+
         if (formularErrors.hasErrors()) {
-            m.addAttribute("kategorienr", id);
-            //logger.info("Errors = {}", formularErrors);
+            logger.info("Errors = {}", formularErrors);
             return "kategorieBearbeiten";
         } else {
             formular.toKategorie(kategorie);
@@ -109,13 +125,11 @@ public class KategorieController {
             } catch (RuntimeException e) {
                 String errorMessage = "Fehler beim Speichern der Kategorie: " + e.getMessage();
                 m.addAttribute("info", errorMessage);
-                //logger.error(errorMessage);
+                logger.error(errorMessage);
                 return "kategorieBearbeiten";
             }
         }
     }
     
 
-
-    
 }

@@ -5,10 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie;
 import de.hsrm.mi.web.projekt.entities.Kategorie.KategorieRepository;
 
+/**
+@author Ana-Maria Adanaia
+ */
 
 @Service
 public class KategorieServiceImpl implements KategorieService {
@@ -60,12 +62,10 @@ public class KategorieServiceImpl implements KategorieService {
         LOGGER.info("Kategorie mit ID {} wurde gelöscht.", id);
     }
 
-    // Die Methode wird momentan nicht verwendet. 
     @Override
     public int getAnzahlFragen(Kategorie kategorie) {
         return kategorie.getFragen().size();
     }
-    
     
     
 }

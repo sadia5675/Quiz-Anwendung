@@ -1,8 +1,6 @@
 package de.hsrm.mi.web.projekt.entities.Kategorie;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import de.hsrm.mi.web.projekt.entities.frage.Frage;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,6 +11,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
+
+/**
+@author Ana-Maria Adanaia
+ */
 
 @Entity //gibt an, dass die Klasse eine JPA-Entität ist und in einer Datenbank gespeichert werden kann
 public class Kategorie {
