@@ -3,8 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie;
 import de.hsrm.mi.web.projekt.entities.frage.Frage;
-import de.hsrm.mi.web.projekt.services.kategorie.KategorieService;
-import de.hsrm.mi.web.projekt.services.kategorie.KategorieServiceImpl;
 import de.hsrm.mi.web.projekt.validators.Verschieden;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

@@ -1,3 +1,7 @@
+<!-- 
+  Autor: Sadia Miah
+-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -10,9 +14,9 @@
     <div class="header">
         <h3>QuizVorrichtung</h3>
         <div class="navigation">
-            <a th:href="@{/kategorien}">Kategorien</a>
-            <a th:href="@{/frage}">Fragen</a>
-            <a th:href="@{/quiz}">Quizze</a>
+            <a th:href="@{/kategorie}" th:text="#{nav.kategorie}">Kategorien</a>
+            <a th:href="@{/frage}" th:text="#{nav.frageliste}">Fragen</a>
+            <a th:href="@{/quiz}"th:text="#{nav.quizliste}">Quizze</a>
         </div>
         <div class="language-switch">
             <a th:href="@{?sprache=de}">DE</a>

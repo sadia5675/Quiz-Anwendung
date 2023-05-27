@@ -1,3 +1,6 @@
+/**
+ * @author Sadia Miah
+ */
 package de.hsrm.mi.web.projekt.services.quiz;
 
 import java.util.List;
