@@ -39,17 +39,17 @@ public class KategorieController {
 
 
     // Wenn diese URL aufgerufen wird, werden alle Kategorien aus der Datenbank abgerufen und dem Model hinzugefügt. 
-    @GetMapping("/kategorien")
+    @GetMapping("/kategorie")
     public String kategorienListe(Model m) {
         List<Kategorie> kategorien = kategorieService.holeAlleKategorien(); //  Die Liste der Kategorien wird dem Model mit dem Attributsnamen "kategorien" hinzugefügt
         m.addAttribute("kategorien", kategorien);
-        return "kategorienliste";  // Anschließend wird die View "kategorien" zurückgegeben
+        return "kategorieliste";  // Anschließend wird die View "kategorien" zurückgegeben
     }
 
     @GetMapping("/kategorie/{id}/del")
     public String deleteKategorie(@PathVariable("id") Long id){
         kategorieService.loescheKategorie(id);
-        return "redirect:/kategorien";
+        return "redirect:/kategorie";
     }
 
     // Wert der {id} aus der URL-Anfrage wird extrahiert und kann in der Methode weiter verwendet werden
@@ -62,7 +62,7 @@ public class KategorieController {
     if (id == 0) {
         formular = new KategorieFormular(); // Neue leere KategorieFormular wird erstellt und der Variable "formular" zugewiesen
         m.addAttribute("kategorieFormular", formular); //"formular" wird als Attribut mit dem Namen "kategorieFormular" dem Model m hinzugefügt. Damit kann das Formular in der View verwendet werden.
-        m.addAttribute("kategorie", new Kategorie()); // Neue leere Kategorie wird erstellt und mit dem Namen "kategorie" dem Model m hinzugefügt
+        m.addAttribute("kategorien", new Kategorie()); // Neue leere Kategorie wird erstellt und mit dem Namen "kategorie" dem Model m hinzugefügt
     }
     
     if (id > 0) {
@@ -115,14 +115,6 @@ public class KategorieController {
         }
     }
     
-
- 
-    
-
-
-
-
-
 
 
     

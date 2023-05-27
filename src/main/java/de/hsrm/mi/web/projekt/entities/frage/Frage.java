@@ -4,10 +4,13 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
+
+import de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie;
 
 @Entity //gibt an, dass die Klasse eine JPA-Entität ist und in einer Datenbank gespeichert werden kann
 public class Frage {
@@ -27,8 +30,8 @@ public class Frage {
     @NotNull
     private int punktzahl;
 
-    @NotNull
-    private String kategorie;
+    @ManyToOne
+    private Kategorie kategorie;
 
     @ElementCollection //dass es sich um eine Sammlung von Elementen handelt, die in einer separaten Tabelle in der Datenbank gespeichert werden sollen
     private List<String> falscheAntworten;
@@ -37,7 +40,7 @@ public class Frage {
     public Frage() {}
     
     //Werte direkt beim Erstellen der Frage festzulegen
-    public Frage(String fragetext, String richtigeAntwort, int punktzahl, String kategorie, List<String> falscheAntworten) {
+    public Frage(String fragetext, String richtigeAntwort, int punktzahl, Kategorie kategorie, List<String> falscheAntworten) {
         this.fragetext = fragetext;
         this.richtigeAntwort = richtigeAntwort;
         this.punktzahl = punktzahl;
@@ -81,13 +84,15 @@ public class Frage {
         this.punktzahl = punktzahl;
     }
 
-    public String getKategorie() {
+   
+    public Kategorie getKategorie() {
         return kategorie;
     }
 
-    public void setKategorie(String kategorie) {
+    public void setKategorie(Kategorie kategorie) {
         this.kategorie = kategorie;
     }
+
 
     public List<String> getFalscheAntworten() {
         return falscheAntworten;
