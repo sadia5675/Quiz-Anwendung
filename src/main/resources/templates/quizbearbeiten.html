@@ -40,7 +40,7 @@
                 <td>
                   <input type="checkbox" th:field="*{ausgewaehlteFragen}" th:value="${frage.id}" />
                 </td>
-                <td th:text="${frage.kategorie}"></td>
+                <td th:text="${frage.kategorie}? ${frage.kategorie.name} : 'ohne Kategorie'"></td> 
                 <td th:text="${frage.fragetext}"></td>
                 <td th:text="${frage.punktzahl}"></td>
               </tr>

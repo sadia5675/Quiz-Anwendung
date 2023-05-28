@@ -1,5 +1,6 @@
 package de.hsrm.mi.web.projekt.ui.frage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -46,11 +47,6 @@ public class FrageController {
         return new Frage();
     }
 
-    @ModelAttribute("kategorien")
-    public List<Kategorie> initKategorien() {
-        return kategorieService.holeAlleKategorien();
-    }
-
     //----------------------------------------------GET MAPPING---------------------------------------------------------------------------------
 
     //sortierte Liste aller Fragen nach Kategorie und Punktzahl zu erhalten und in frageliste.html anzuzeigen 
@@ -62,8 +58,15 @@ public class FrageController {
     }
     //die Frage mit der angegebenen ID wird gelöscht //"redirect:/frage" wird zurückgegeben, um auf die Frageliste Seite umgeleitet zu werden
     @GetMapping("/frage/{id}/del")
-    public String deleteFrage(@PathVariable("id") Long id){
-        frageService.loescheFrage(id);
+    public String deleteFrage(@PathVariable("id") Long id,
+                              Model m){
+        try {
+            frageService.loescheFrage(id);
+        } catch (RuntimeException e) {
+            String errorMessage = "Fehler beim Löschen der Frage: " + e.getMessage();
+            m.addAttribute("info", errorMessage); 
+            logger.error(errorMessage);
+        }
         return "redirect:/frage";
     }
     
@@ -88,6 +91,9 @@ public class FrageController {
                 m.addAttribute("frage", frage); // Das Frage-Objekt im Session-Attribut frage speichern
             }
         }
+
+        List<Kategorie> kategorien = kategorieService.holeAlleKategorien();
+        m.addAttribute("kategorien", kategorien);
 
         m.addAttribute("fragenr",fragenr);
         m.addAttribute("maxfalsch", MAX_FALSCH);
@@ -117,14 +123,14 @@ public class FrageController {
             }
            
         }
+        List<Kategorie> kategorien = kategorieService.holeAlleKategorien();
+        m.addAttribute("kategorien", kategorien);
 
         m.addAttribute("fragenr",fragenr);      
         m.addAttribute("maxfalsch", MAX_FALSCH);
 
 
         if(formularErrors.hasErrors()) {
-            m.addAttribute("fragenr",fragenr);
-            m.addAttribute("maxfalsch", MAX_FALSCH);
             logger.info("Errors = {}", formularErrors);
             return "fragebearbeiten";
 
