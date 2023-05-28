@@ -25,20 +25,21 @@
         </div>
     </div>
 
-    <h1 th:text="#{kategorieformular.titel(kategorie.id)}">Bearbeite Kategorie [{kategorie.id}]</h1>
+    <h1><span th:text="#{kategorieformular.titel(${kategorie.name})}">]</span></h1>
 
     <form th:action="@{/kategorie/} + ${id}" th:object="${kategorieFormular}" method="POST">
         
             <label for="name" th:text="#{kategorieformular.label.name}">Name:</label>
-            <input type="text" id="kategorieName" name="kategoriename" th:field="*{name}">
+            <input type="text" id="kategorieName" name="kategoriename" th:field="*{name}" th:errorclass="fehlerFeld">
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-message2"></span>
         <br><br>
         
             <label for="beschreibung" th:text="#{kategorieformular.label.beschreibung}">Beschreibung:</label>
-            <input type="text" id="beschreibung" name="beschreibung" th:field="*{beschreibung}">
+            <input type="text" id="beschreibung" name="beschreibung" th:field="*{beschreibung}" th:errorclass="fehlerFeld">
+            <span th:if="${#fields.hasErrors('beschreibung')}" th:errors="*{beschreibung}" class="error-message2"></span>
         <br><br>
 
-            <input type="submit" th:value="#{kategorieformular.label.submit}" />
-        
+            <input type="submit" class="neueFrage-link" th:value="#{kategorieformular.label.submit}" />
     </form>
     
     <h2 th:text = "#{kategorieformular.frageliste.titel}">Fragen</h2>
@@ -46,14 +47,13 @@
         <tbody>
             <tr th:each="frage : ${kategorie.fragen}">
                 <td th:text="${frage.id}"></td>
-                <td><a th:href="@{/frage/{id}(id=${frage.id})}" th:text="${frage.fragetext}"></a></td>
+                <td>
+                    <a th:href="@{/frage/{id}(id=${frage.id})}" th:text="${frage.fragetext}"></a>
+                </td>
                 <td th:text="${frage.punktzahl}"></td>
             </tr>
         </tbody>
     </table>
 
-
-
-    
 </body>
 </html>

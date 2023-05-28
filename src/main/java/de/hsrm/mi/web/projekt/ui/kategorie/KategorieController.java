@@ -58,9 +58,16 @@ public class KategorieController {
     }
 
     @GetMapping("/kategorie/{id}/del")
-    public String deleteKategorie(@PathVariable("id") Long id){
-        kategorieService.loescheKategorie(id);
-        return "redirect:/kategorie";
+    public String deleteKategorie(@PathVariable("id") Long id,Model m){
+       
+        try {
+            kategorieService.loescheKategorie(id);
+            
+        } catch (RuntimeException e) {
+            String errorMessage = "Fehler beim Löschen der Kategorie: " + e.getMessage();
+            m.addAttribute("info", errorMessage); logger.error(errorMessage);
+        }
+            return "redirect:/kategorie";
     }
 
     // Wert der {id} aus der URL-Anfrage wird extrahiert und kann in der Methode weiter verwendet werden
