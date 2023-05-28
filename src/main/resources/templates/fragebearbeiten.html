@@ -25,7 +25,11 @@
 		<label for="kategorien" th:text="#{frageformular.label.kategorie}">Kategorie:</label>
 		<select id="kategorien" name="kategorie" th:errorclass="fehlerFeld"> 
 			<!--th:each-Schleife iteriert durch die Kategorien in der Liste und erstellt eine Option für jede Kategorie-->
-			 <option th:each="kategorie : ${kategorien}" th:value="${kategorie.id}" th:text="${kategorie.name}" th:field="*{kategorie}"></option>   
+			 <option th:each="kategorie : ${kategorien}" 
+			 th:value="${kategorie.id}" 
+			 th:text="${kategorie.name}"
+			 th:field="*{kategorie}">
+			</option>   
 		</select>
 		<span th:if="${#fields.hasErrors('kategorie')}" th:errors="*{kategorie}" class="error-message"></span>
 		<br><br>

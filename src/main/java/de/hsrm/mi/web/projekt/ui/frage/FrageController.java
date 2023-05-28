@@ -46,11 +46,6 @@ public class FrageController {
         return new Frage();
     }
 
-    @ModelAttribute("kategorien")
-    public List<Kategorie> initKategorien() {
-        return kategorieService.holeAlleKategorien();
-    }
-
     //----------------------------------------------GET MAPPING---------------------------------------------------------------------------------
 
     //sortierte Liste aller Fragen nach Kategorie und Punktzahl zu erhalten und in frageliste.html anzuzeigen 
@@ -89,6 +84,9 @@ public class FrageController {
             }
         }
 
+        List<Kategorie> kategorien = kategorieService.holeAlleKategorien();
+        m.addAttribute("kategorien", kategorien);
+
         m.addAttribute("fragenr",fragenr);
         m.addAttribute("maxfalsch", MAX_FALSCH);
         return "fragebearbeiten"; // gibt die View mit dem Namen "fragebearbeiten" zurück
@@ -117,14 +115,14 @@ public class FrageController {
             }
            
         }
+        List<Kategorie> kategorien = kategorieService.holeAlleKategorien();
+        m.addAttribute("kategorien", kategorien);
 
         m.addAttribute("fragenr",fragenr);      
         m.addAttribute("maxfalsch", MAX_FALSCH);
 
 
         if(formularErrors.hasErrors()) {
-            m.addAttribute("fragenr",fragenr);
-            m.addAttribute("maxfalsch", MAX_FALSCH);
             logger.info("Errors = {}", formularErrors);
             return "fragebearbeiten";
 
@@ -144,7 +142,7 @@ public class FrageController {
                 String errorMessage = "Fehler beim Speichern der Frage:" + e.getMessage();
                 m.addAttribute("info", errorMessage);
                 logger.error(errorMessage);
-                return "fragebearbeiten";
+                return "redirect:frageliste";
                 }
             }
     }
