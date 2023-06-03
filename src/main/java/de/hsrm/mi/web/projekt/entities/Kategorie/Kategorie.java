@@ -81,6 +81,7 @@ public class Kategorie {
         return fragen.size();
     }
 
+    //um die Beziehung zu aktualisieren
     public void addFrage(Frage neueFrage) {
         fragen.add(neueFrage);
         neueFrage.setKategorie(this);

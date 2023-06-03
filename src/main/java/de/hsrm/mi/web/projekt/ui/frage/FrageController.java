@@ -100,6 +100,12 @@ public class FrageController {
         return "fragebearbeiten"; // gibt die View mit dem Namen "fragebearbeiten" zurück
     }
 
+    @GetMapping("/frage/quizdienst")
+    public String generiereNeueFragenUndRedirect(Model model) {
+        frageService.generiereNeueFragen(3);
+        return "redirect:/frage";
+    }
+
     
     //----------------------------------------------POST MAPPING-------------------------------------------------------------------------------------------
 

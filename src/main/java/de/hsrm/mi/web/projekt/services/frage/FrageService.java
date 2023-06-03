@@ -11,4 +11,5 @@ public interface FrageService {
     public Optional<Frage> holeFrageMitId(long id);
     Frage speichereFrage(Frage f);
     void loescheFrage(long id);
+    void generiereNeueFragen(int count);
     }

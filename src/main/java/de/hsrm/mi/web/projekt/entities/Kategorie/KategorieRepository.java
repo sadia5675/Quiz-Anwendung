@@ -1,4 +1,6 @@
 package de.hsrm.mi.web.projekt.entities.Kategorie;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -7,4 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface KategorieRepository extends JpaRepository <Kategorie, Long> {
     
+    Optional<Kategorie> findByName(String name);
+
+    <S extends Kategorie> S save(de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie kategorie);
 }

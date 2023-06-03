@@ -1,5 +1,7 @@
 package de.hsrm.mi.web.projekt.entities.frage;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 //Schnittstelle für die Datenbankinteraktion mit der Entität Frage
@@ -7,4 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 //long  gibt den Datentyp des Primärschlüssels (id) der Entität Frage an
 public interface FrageRepository extends JpaRepository<Frage, Long> {
     
+    //Frage Objekt anhand seines fragetext Eigenschaftswertes zu finden
+    Optional<de.hsrm.mi.web.projekt.services.quizdienste.FrageQuelleServiceTheTriviaAPI.Frage> findByFragetext(String fragetext);
+    //Frage Objekt im Repository zu speichern
+    <S extends Frage> S save(de.hsrm.mi.web.projekt.services.quizdienste.FrageQuelleServiceTheTriviaAPI.Frage frage);
 }
