@@ -10,8 +10,6 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie;
 
 @Entity //gibt an, dass die Klasse eine JPA-Entität ist und in einer Datenbank gespeichert werden kann
@@ -23,18 +21,15 @@ public class Frage {
     @Version//JPA kann Kollisionen bei gleichzeitigen Änderungen an einer Entität erkennen und behandeln
     private long version;
 
-    @JsonProperty("question")
     @NotNull//nicht null sein darf
     private String fragetext;
 
     @NotNull
     private String richtigeAntwort;
 
-    @JsonProperty("ponits")
     @NotNull
     private int punktzahl;
 
-    @JsonProperty("category")
     @ManyToOne
     private Kategorie kategorie;
 

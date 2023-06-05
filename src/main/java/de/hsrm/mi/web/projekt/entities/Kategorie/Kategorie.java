@@ -96,6 +96,4 @@ public class Kategorie {
         frage.setKategorie(null);
     }
 
-
-
 }

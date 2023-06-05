@@ -72,6 +72,9 @@ public class FrageServiceImpl implements FrageService {
 
     @Override
     public void generiereNeueFragen(int count) {
-        List<Frage> neueFragen = frageQuelleService.generiereNeueFragen(count);
+        for (int i = 1; i < count; i++) {
+        List<Frage> neueFragen = frageQuelleService.generiereNeueFragen(i);
+        }
+        
     }
 }
