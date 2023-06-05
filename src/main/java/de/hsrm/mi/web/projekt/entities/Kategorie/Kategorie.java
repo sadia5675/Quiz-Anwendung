@@ -45,6 +45,10 @@ public class Kategorie {
         this.beschreibung = beschreibung;
     }
 
+    public Kategorie(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

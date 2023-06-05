@@ -72,10 +72,6 @@ public class FrageServiceImpl implements FrageService {
 
     @Override
     public void generiereNeueFragen(int count) {
-        int c = 1;
-        while(c !=count){
-        List<de.hsrm.mi.web.projekt.services.quizdienste.FrageQuelleServiceTheTriviaAPI.Frage> neueFragen = frageQuelleService.generiereNeueFragen(c);
-        c += 1;
-        }
+        List<Frage> neueFragen = frageQuelleService.generiereNeueFragen(count);
     }
 }

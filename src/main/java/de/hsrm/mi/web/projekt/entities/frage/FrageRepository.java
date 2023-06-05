@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface FrageRepository extends JpaRepository<Frage, Long> {
     
     //Frage Objekt anhand seines fragetext Eigenschaftswertes zu finden
-    Optional<de.hsrm.mi.web.projekt.services.quizdienste.FrageQuelleServiceTheTriviaAPI.Frage> findByFragetext(String fragetext);
+    Optional<Frage> findByFragetext(String string);
     //Frage Objekt im Repository zu speichern
-    <S extends Frage> S save(de.hsrm.mi.web.projekt.services.quizdienste.FrageQuelleServiceTheTriviaAPI.Frage frage);
+    <S extends Frage> S save(S frage);
 }

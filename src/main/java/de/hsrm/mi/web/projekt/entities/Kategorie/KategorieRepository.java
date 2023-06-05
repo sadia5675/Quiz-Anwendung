@@ -11,5 +11,5 @@ public interface KategorieRepository extends JpaRepository <Kategorie, Long> {
     
     Optional<Kategorie> findByName(String name);
 
-    <S extends Kategorie> S save(de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie kategorie);
+    <S extends Kategorie> S save(S kategorie);
 }
