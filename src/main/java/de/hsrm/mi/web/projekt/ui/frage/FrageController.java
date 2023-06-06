@@ -101,7 +101,7 @@ public class FrageController {
     }
 
     @GetMapping("/frage/quizdienst")
-    public String generiereNeueFragenUndRedirect(Model model) {
+    public String generiereNeueFragenUndRedirect() {
         frageService.generiereNeueFragen(3);
         return "redirect:/frage";
     }
