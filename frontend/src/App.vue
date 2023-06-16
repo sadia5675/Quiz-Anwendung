@@ -17,6 +17,7 @@
     <!-- Hier wird der Hauptinhalt der Anwendung eingefügt -->
     <main>
       <!-- Der Router wird den eigentlichen Hauptinhalt später einblenden -->
+      <QuizListeView />
     </main>
   </div>
 </template>
@@ -25,6 +26,9 @@
 <script setup lang="ts">
 
 import { useInfo } from '@/services/InfoService'
+import QuizListeView from '@/views/QuizListeView.vue';
+
+
 
 const { readonlyInfonachricht, setInfo } = useInfo();
 
