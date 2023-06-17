@@ -17,7 +17,7 @@
     <!-- Hier wird der Hauptinhalt der Anwendung eingefügt -->
     <main>
       <!-- Der Router wird den eigentlichen Hauptinhalt später einblenden -->
-      <QuizListeView />
+      <RouterView/>
     </main>
   </div>
 </template>

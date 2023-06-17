@@ -52,12 +52,9 @@ button {
     padding: 0;
   }
 
-  /* Stil für jedes Quiz-Element */
   li {
     margin-bottom: 10px;
   }
 
-  /* Stil für den Quiznamen und die Anzahl der Fragen */
-  
 
 </style>
