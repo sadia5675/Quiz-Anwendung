@@ -1,7 +1,30 @@
 import { ref, computed, readonly } from 'vue';
 import { type IQuizInfo } from '@/services/backendapitypen';
+import {useInfo} from '@/services/InfoService';
 
+const { setInfo } = useInfo();
 
+export const quizListe = ref<IQuizInfo[]>([]);
+
+export async function updateQuizInfoListe() {
+  try {
+    console.log('Fetching quiz data...'); // Zwischenmeldung: Abfrage von Quiz-Daten
+
+    const response = await fetch('/rest/api/quiz');
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    console.log('Quiz data fetched successfully.'); // Zwischenmeldung: Quiz-Daten erfolgreich abgerufen
+
+    const data = await response.json();
+    quizListe.value = data;
+  } catch (error: any) {
+    setInfo(error.message);
+    console.error('Error fetching quiz data:', error); // Zwischenmeldung: Fehler beim Abrufen von Quiz-Daten
+  }
+}
 
 export function useQuizService() {
     // Simulierte Daten für die Quiz-Liste
@@ -34,5 +57,6 @@ export function useQuizService() {
       quizinfoliste: readonly(gefilterteListe),
       suchbegriff,
       resetSuchbegriff,
+      updateQuizInfoListe
     };
   }

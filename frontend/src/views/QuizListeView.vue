@@ -8,6 +8,7 @@
           ({{ quiz.nFragen }} Fragen)
         </li>
       </ul>
+      <button @click="updateQuizInfoListe">Quizliste aktualisieren</button>
     </div>
   </template>
 
@@ -18,7 +19,7 @@
 
 import { useQuizService } from '../services/QuizListeService';
 
-const { quizinfoliste, suchbegriff, resetSuchbegriff } = useQuizService();
+const { quizinfoliste, suchbegriff, resetSuchbegriff, updateQuizInfoListe } = useQuizService();
 
 </script>
 
