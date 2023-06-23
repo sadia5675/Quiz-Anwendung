@@ -18,7 +18,6 @@ import de.hsrm.mi.web.projekt.services.quiz.QuizService;
 
 
 @RestController
-@RequestMapping("/rest")
 public class QuizRestAPIController {
 
     @Autowired

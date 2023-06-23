@@ -10,16 +10,20 @@ export async function updateQuizInfoListe() {
   try {
     console.log('Fetching quiz data...'); // Zwischenmeldung: Abfrage von Quiz-Daten
 
-    const response = await fetch('/rest/api/quiz');
+    const response = await fetch('/api/quiz');
 
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-
-    console.log('Quiz data fetched successfully.'); // Zwischenmeldung: Quiz-Daten erfolgreich abgerufen
-
+    else{
+      console.log('Quiz data fetched successfully.'); // Zwischenmeldung: Quiz-Daten erfolgreich abgerufen
+      
+    }
+    
     const data = await response.json();
     quizListe.value = data;
+    console.log(data);
+
   } catch (error: any) {
     setInfo(error.message);
     console.error('Error fetching quiz data:', error); // Zwischenmeldung: Fehler beim Abrufen von Quiz-Daten

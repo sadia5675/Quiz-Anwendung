@@ -3,12 +3,11 @@
       <input type="text" v-model="suchbegriff" placeholder="Suche nach Quiz" />
       <button @click="resetSuchbegriff">Reset</button>
       <ul>
-        <li v-for="quiz in quizinfoliste" :key="quiz.id">
+        <li v-for="quiz in quizListe" :key="quiz.id">
           <router-link :to="'/quiz/' + quiz.id">{{ quiz.name }}</router-link>
           ({{ quiz.nFragen }} Fragen)
         </li>
       </ul>
-      <button @click="updateQuizInfoListe">Quizliste aktualisieren</button>
     </div>
   </template>
 
@@ -17,9 +16,9 @@
 
 <script setup lang="ts">
 
-import { useQuizService } from '../services/QuizListeService';
-
-const { quizinfoliste, suchbegriff, resetSuchbegriff, updateQuizInfoListe } = useQuizService();
+import { useQuizService, quizListe , updateQuizInfoListe} from '../services/QuizListeService';
+updateQuizInfoListe();
+const { suchbegriff, resetSuchbegriff } = useQuizService();
 
 </script>
 
