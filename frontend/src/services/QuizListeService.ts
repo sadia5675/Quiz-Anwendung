@@ -8,16 +8,10 @@ export const quizListe = ref<IQuizInfo[]>([]);
 
 export async function updateQuizInfoListe() {
   try {
-    console.log('Fetching quiz data...'); // Zwischenmeldung: Abfrage von Quiz-Daten
-
     const response = await fetch('/api/quiz');
 
     if (!response.ok) {
       throw new Error(response.statusText);
-    }
-    else{
-      console.log('Quiz data fetched successfully.'); // Zwischenmeldung: Quiz-Daten erfolgreich abgerufen
-      
     }
     
     const data = await response.json();
@@ -26,7 +20,6 @@ export async function updateQuizInfoListe() {
 
   } catch (error: any) {
     setInfo(error.message);
-    console.error('Error fetching quiz data:', error); // Zwischenmeldung: Fehler beim Abrufen von Quiz-Daten
   }
 }
 

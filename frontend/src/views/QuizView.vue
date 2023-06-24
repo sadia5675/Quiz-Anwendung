@@ -1,12 +1,12 @@
 <template>
     
     <div>
-    <h2>Quiz ID: {{ quizId }}</h2>
-    <h3>{{ quiz.titel }}</h3>
-    <p>Punktesumme: {{ quiz.punktesumme }}</p>
+    <h2>Quiz ID: {{ readonlyQuiz.id }}</h2>
+    <h3>{{ readonlyQuiz.titel }}</h3>
+    <p>Punktesumme: {{ readonlyQuiz.punktesumme }}</p>
 
     <ul>
-      <li v-for="frage in quiz.fragen" :key="frage.frageid">
+      <li v-for="frage in readonlyQuiz.fragen" :key="frage.frageid">
         <frage-box :frage="frage" :antwortzeit="0"></frage-box>
       </li>
     </ul>
@@ -17,33 +17,38 @@
   
 <script setup lang="ts">
 
-  import { defineProps } from 'vue'
-  import { useQuiz } from '@/services/QuizService';
-  import FrageBox from '@/components/FrageBox.vue';
-  
-  /* Das habe ich benutzt um die einzelnen Quizzes zu zeigen 
-  <template>
-  <div>
-      <h1>Quiz View</h1>
-      <p>Quiz ID: {{ quizid }}</p>
-    </div>
-  </template>
+import { defineProps,onMounted } from 'vue'
+import { updateQuiz,readonlyQuiz } from '@/services/QuizService';
+import FrageBox from '@/components/FrageBox.vue';
+import { useInfo } from '@/services/InfoService';
+const { setInfo } = useInfo();
 
 
-  const props = defineProps<{
-    quizid: string
-  }>()
 
-  */
-  
-  const props = defineProps({
-  quizId: {
+// In deiner router-Konfiguration hat man props: true für die Route /quiz/:quizid festgelegt, 
+// was bedeutet, dass die Route - Parameter als Props an die QuizView.vue - Komponente übergeben werden.
+// Um die Quiz - ID in der Komponente zu erhalten, kannst man props.quizid verwenden
+const props = defineProps({
+  quizid: {
     type: String,
-    required: true,
-  },
-  });
+    required: true
+  }
+});
 
-const { quiz } = useQuiz();
+
+
+//Insgesamt ermöglicht onMounted, dass der Code innerhalb der Funktion automatisch ausgeführt wird,
+//sobald die Komponente bereit ist.Es ist eine praktische Möglichkeit,
+//asynchrone Aufrufe oder Initialisierungslogik in Vue - Komponenten zu handhaben.
+//hier: um das Quiz zu aktualisieren
+onMounted(async () => {
+  try {
+    const quizId = parseInt(props.quizid);
+    await updateQuiz(quizId);
+  } catch (error: any) {
+    setInfo(error.message);
+  }
+  });
 
 </script>
 
