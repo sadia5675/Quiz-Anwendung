@@ -3,7 +3,7 @@
       <input type="text" v-model="suchbegriff" placeholder="Suche nach Quiz" />
       <button @click="resetSuchbegriff">Reset</button>
       <ul>
-        <li v-for="quiz in quizListe" :key="quiz.id">
+        <li v-for="quiz in gefilterteListe" :key="quiz.id">
           <router-link :to="'/quiz/' + quiz.id">{{ quiz.name }}</router-link>
           ({{ quiz.nFragen }} Fragen)
         </li>
@@ -12,13 +12,31 @@
   </template>
 
 
-
-
 <script setup lang="ts">
 
-import { useQuizService, quizListe , updateQuizInfoListe} from '../services/QuizListeService';
+
+
+import { quizListe, updateQuizInfoListe } from '../services/QuizListeService';
+import { ref, computed } from 'vue';
+
 updateQuizInfoListe();
-const { suchbegriff, resetSuchbegriff } = useQuizService();
+
+const suchbegriff = ref('');
+
+// Code für den Suchfeld
+const gefilterteListe = computed(() => {
+  const filter = suchbegriff.value.toLowerCase().trim();
+  if (!filter) {
+    return quizListe.value; // Wenn im Suchfeld nichts steht soll die Liste einfach angezeigt werden
+  }
+  return quizListe.value.filter((quiz) => 
+    quiz.name.toLowerCase().includes(filter)
+  );
+});
+
+function resetSuchbegriff() {
+  suchbegriff.value = '';
+}
 
 </script>
 
