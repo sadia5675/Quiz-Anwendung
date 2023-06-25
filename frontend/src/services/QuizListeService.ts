@@ -31,29 +31,4 @@ export function useQuizService() {
       { id: 3, name: 'Orte', nFragen: 7 },
     ]);
   
-    // Suchfeld-Status
-    const suchbegriff = ref('');
-  
-    // Gefilterte Liste basierend auf Suchbegriff
-    const gefilterteListe = computed(() => {
-      const filter = suchbegriff.value.toLowerCase().trim();
-      if (!filter) {
-        return quizListe.value;
-      }
-      return quizListe.value.filter((quiz) =>
-        quiz.name.toLowerCase().includes(filter)
-      );
-    });
-  
-    // Funktion zum Zurücksetzen des Suchbegriffs
-    function resetSuchbegriff() {
-      suchbegriff.value = '';
-    }
-  
-    return {
-      quizinfoliste: readonly(gefilterteListe),
-      suchbegriff,
-      resetSuchbegriff,
-      updateQuizInfoListe
-    };
   }
