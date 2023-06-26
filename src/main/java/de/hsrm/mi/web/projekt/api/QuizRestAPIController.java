@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hsrm.mi.web.projekt.entities.frage.Frage;
 import de.hsrm.mi.web.projekt.entities.quiz.Quiz;
+import de.hsrm.mi.web.projekt.services.frage.FrageService;
 import de.hsrm.mi.web.projekt.services.quiz.QuizService;
 
 @RestController
@@ -20,6 +23,7 @@ public class QuizRestAPIController {
 
     @Autowired
     private QuizService quizService;
+    private FrageService frageService;
 
     // Record für Quiz-Liste
     public record QuizInfoDTO(long id, String name, int nFragen) {
@@ -35,6 +39,50 @@ public class QuizRestAPIController {
 
     // Objekt Mapper umwandelt ein Java-Objekt in JSON und anders rum
     private ObjectMapper objectMapper = new ObjectMapper();
+
+   //------------------------------------------------------------------------------
+
+    // Record für Client-Anfrage
+    public record QuizCheckRequestDTO(long qid, List<AntwortDTO> antworten) {
+    }
+
+    // Record für Antwort-DTO
+    public record AntwortDTO(long fid, String antwort) {
+    }
+
+    // Record für Server-Antwort mit Überprufung ob die Antworten richtig sind oder falsch
+    public record QuizCheckResponseDTO(long qid, List<AntwortErgebnisDTO> ergebnisse) {
+    }
+
+    // Record für Server Antwort Ergebnis-DTO
+    public record AntwortErgebnisDTO(long fid, boolean richtig) {
+    }
+
+//---------------------------------------------------------------------------------
+
+
+    @PostMapping("/api/quiz/check")
+    public ResponseEntity<String> checkQuiz(@RequestBody QuizCheckRequestDTO request) throws JsonProcessingException {
+
+        List<AntwortErgebnisDTO> ergebnisse = new ArrayList<>();
+
+            for (AntwortDTO antwort : request.antworten()) {
+                boolean richtig = frageService.pruefeAntwort(antwort.fid(), antwort.antwort());
+
+                AntwortErgebnisDTO ergebnis = new AntwortErgebnisDTO(antwort.fid(), richtig);
+                ergebnisse.add(ergebnis);
+            }
+
+            // Erzeugung der Antwort im JSON-Format
+            QuizCheckResponseDTO response = new QuizCheckResponseDTO(request.qid(), ergebnisse);
+            String json = objectMapper.writeValueAsString(response);
+
+            return ResponseEntity.ok(json);
+    
+    }
+
+
+//-----------------------------------------------------------------------------------
 
     // Link: http://localhost:8080/rest/api/quiz
     @GetMapping("/api/quiz")
@@ -101,5 +149,17 @@ public class QuizRestAPIController {
         }
         return summe;
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -11,14 +11,16 @@
             
             <div v-for="antwort, index in frage.alleantworten">
             <label :for="'antwort-' + index"> {{ antwort }} </label>
-            <input :id="'antwort-' + index" type="radio" :value="index" v-model="ausgewaehlteAntwort" :disabled="antwortDisabled">
+            <input :id="'antwort-' + index" type="radio" :value="index" v-model="ausgewaehlteAntwort" :disabled="antwortDisabled" @change="emitFrageBeantwortet">
             </div>
         </div>
     </div>   
 </template>
   
 <script setup lang="ts">
-    import { defineProps, ref, watch } from 'vue';
+    
+import { defineProps, ref, watch, defineEmits } from 'vue';
+
 
     const props = defineProps({
     frage: {
@@ -35,7 +37,6 @@
     const counter = ref();
     const antwortDisabled = ref(false); // Wenn answerDisabled auf true gesetzt ist, wird der Radiobutton deaktiviert und kann nicht ausgewählt werden.
     const ausgewaehlteAntwort = ref(null); // Hier wird die ausgewählte Antwort der Frage gespeichert. Wenn der User eine Antwort auswählt, wird der Wert des entsprechenden Radio-Buttons an selectedAnswer gebunden.
-
     const isAnswering = ref(false);
 
     let timerId: number;
@@ -55,6 +56,7 @@
         if (counter.value === 0) {
         clearInterval(timerId);
         antwortDisabled.value = true;
+        emitZeitVorbei();
         }
     }, 1000);
     };
@@ -70,6 +72,22 @@
     }
     };
 
+    
+    const emit = defineEmits<{
+        fragebeantwortet: [ frageid: number,antwort: string ];
+        zeitvorbei: [ frageid: number];
+        }>();
+    
+
+    function emitFrageBeantwortet() {
+        const antwort = ausgewaehlteAntwort.value !== null ? props.frage.alleantworten[ausgewaehlteAntwort.value] : '';
+        const payload = { frageid: props.frage.frageid, antwort };
+        emit('fragebeantwortet', props.frage.frageid, antwort);
+    }
+
+    function emitZeitVorbei() {
+        emit('zeitvorbei', props.frage.frageid);
+    }
 
 </script>
 

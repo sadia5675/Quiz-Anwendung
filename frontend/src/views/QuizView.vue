@@ -7,7 +7,7 @@
 
     <ul>
       <li v-for="frage in readonlyQuiz.fragen" :key="frage.frageid">
-        <frage-box :frage="frage" :antwortzeit="0"></frage-box>
+        <frage-box :frage="frage" :antwortzeit="0" @fragebeantwortet="handleFrageBeantwortet" @zeitvorbei="handleZeitVorbei" ></frage-box>
       </li>
     </ul>
   </div>
@@ -17,38 +17,48 @@
   
 <script setup lang="ts">
 
-import { defineProps,onMounted } from 'vue'
-import { updateQuiz,readonlyQuiz } from '@/services/QuizService';
-import FrageBox from '@/components/FrageBox.vue';
-import { useInfo } from '@/services/InfoService';
-const { setInfo } = useInfo();
+  import { defineProps,onMounted,ref } from 'vue'
+  import { updateQuiz,readonlyQuiz } from '@/services/QuizService';
+  import FrageBox from '@/components/FrageBox.vue';
+  import { useInfo } from '@/services/InfoService';
+  const { setInfo } = useInfo();
 
+  const beantworteteFragen = ref(new Map<number, string>());
 
-
-// In deiner router-Konfiguration hat man props: true für die Route /quiz/:quizid festgelegt, 
-// was bedeutet, dass die Route - Parameter als Props an die QuizView.vue - Komponente übergeben werden.
-// Um die Quiz - ID in der Komponente zu erhalten, kannst man props.quizid verwenden
-const props = defineProps({
-  quizid: {
-    type: String,
-    required: true
+  function handleFrageBeantwortet(frageid: number, antwort: string) {
+    beantworteteFragen.value.set(frageid, antwort);
   }
-});
 
-
-
-//Insgesamt ermöglicht onMounted, dass der Code innerhalb der Funktion automatisch ausgeführt wird,
-//sobald die Komponente bereit ist.Es ist eine praktische Möglichkeit,
-//asynchrone Aufrufe oder Initialisierungslogik in Vue - Komponenten zu handhaben.
-//hier: um das Quiz zu aktualisieren
-onMounted(async () => {
-  try {
-    const quizId = parseInt(props.quizid);
-    await updateQuiz(quizId);
-  } catch (error: any) {
-    setInfo(error.message);
+  function handleZeitVorbei(frageid: number) {
+    beantworteteFragen.value.set(frageid, '');
   }
+
+
+
+  // In deiner router-Konfiguration hat man props: true für die Route /quiz/:quizid festgelegt, 
+  // was bedeutet, dass die Route - Parameter als Props an die QuizView.vue - Komponente übergeben werden.
+  // Um die Quiz - ID in der Komponente zu erhalten, kannst man props.quizid verwenden
+  const props = defineProps({
+    quizid: {
+      type: String,
+      required: true
+    }
   });
+
+
+
+  //Insgesamt ermöglicht onMounted, dass der Code innerhalb der Funktion automatisch ausgeführt wird,
+  //sobald die Komponente bereit ist.Es ist eine praktische Möglichkeit,
+  //asynchrone Aufrufe oder Initialisierungslogik in Vue - Komponenten zu handhaben.
+  //hier: um das Quiz zu aktualisieren
+  onMounted(async () => {
+    try {
+      const quizId = parseInt(props.quizid);
+      await updateQuiz(quizId);
+    } catch (error: any) {
+      setInfo(error.message);
+    }
+    });
 
 </script>
 
@@ -76,5 +86,14 @@ onMounted(async () => {
       cursor: pointer;
     }
 
-  
+    
+    .richtig-beantwortet {
+      border: 2px solid green;
+    }
+
+    .falsch-beantwortet {
+      border: 2px solid red;
+    }
+
+
 </style>

@@ -77,4 +77,17 @@ public class FrageServiceImpl implements FrageService {
         }
         
     }
+    @Override
+    public boolean pruefeAntwort(long fid, String antwort) {
+
+    Optional<Frage> optionalFrage = frageRepository.findById(fid);
+
+        if (optionalFrage.isPresent()) {
+            Frage frage = optionalFrage.get();
+            return frage.getRichtigeAntwort().equals(antwort);
+        }
+
+        return false;
+}
+
 }

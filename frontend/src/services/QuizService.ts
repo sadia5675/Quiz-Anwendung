@@ -38,3 +38,29 @@ export async function updateQuiz(qid: number){
     setInfo(error.message);
   }
   }
+
+
+  export async function checkQuiz(quizId: number, beantworteteFragen: Map<number, string>): Promise<any> {
+    try {
+      const response = await fetch(`/api/quiz/check`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          quizId,
+          beantworteteFragen: Array.from(beantworteteFragen.entries()),
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error: any) {
+      setInfo(error.message);
+      return null;
+    }
+  }

@@ -12,4 +12,5 @@ public interface FrageService {
     Frage speichereFrage(Frage f);
     void loescheFrage(long id);
     void generiereNeueFragen(int count);
+    boolean pruefeAntwort(long fid, String antwort);
     }
