@@ -11,7 +11,7 @@
             
             <div v-for="antwort, index in frage.alleantworten">
             <label :for="'antwort-' + index"> {{ antwort }} </label>
-            <input :id="'antwort-' + index" type="radio" :value="index" v-model="ausgewaehlteAntwort" :disabled="antwortDisabled" @change="emitFrageBeantwortet">
+            <input :id="'antwort-' + index" type="radio" :value="index" v-model="ausgewaehlteAntwort" :disabled="antwortDisabled">
             </div>
         </div>
     </div>   
@@ -56,6 +56,7 @@ import { defineProps, ref, watch, defineEmits } from 'vue';
         if (counter.value === 0) {
         clearInterval(timerId);
         antwortDisabled.value = true;
+        emitFrageBeantwortet();
         emitZeitVorbei();
         }
     }, 1000);
@@ -81,7 +82,6 @@ import { defineProps, ref, watch, defineEmits } from 'vue';
 
     function emitFrageBeantwortet() {
         const antwort = ausgewaehlteAntwort.value !== null ? props.frage.alleantworten[ausgewaehlteAntwort.value] : '';
-        const payload = { frageid: props.frage.frageid, antwort };
         emit('fragebeantwortet', props.frage.frageid, antwort);
     }
 

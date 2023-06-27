@@ -18,7 +18,7 @@
 <script setup lang="ts">
 
   import { defineProps,onMounted,ref } from 'vue'
-  import { updateQuiz,readonlyQuiz } from '@/services/QuizService';
+  import { updateQuiz,readonlyQuiz,checkQuiz } from '@/services/QuizService';
   import FrageBox from '@/components/FrageBox.vue';
   import { useInfo } from '@/services/InfoService';
   const { setInfo } = useInfo();
@@ -30,7 +30,11 @@
   }
 
   function handleZeitVorbei(frageid: number) {
-    beantworteteFragen.value.set(frageid, '');
+    
+    if (beantworteteFragen.value.size === readonlyQuiz.value.fragen.length) {
+      checkQuiz(readonlyQuiz.value.id, beantworteteFragen.value);
+   }
+
   }
 
 
