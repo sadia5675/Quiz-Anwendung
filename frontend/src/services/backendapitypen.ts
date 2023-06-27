@@ -25,3 +25,15 @@ export interface IQuiz {
   punktesumme: number
   fragen: IFrage[]
 }
+
+// Record für checkQuiz
+export interface checkQuiz {
+  qid: number
+  beantworteteFragen: antwort[]
+}
+
+//Record für die antwort
+export interface antwort {
+  fid: number 
+  antwort: String
+}

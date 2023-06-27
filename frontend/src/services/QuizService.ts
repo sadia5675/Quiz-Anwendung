@@ -1,5 +1,5 @@
 import { ref, readonly } from 'vue';
-import { type IQuiz, type IFrage } from '@/services/backendapitypen';
+import { type IQuiz, type IFrage , type checkQuiz, type antwort} from '@/services/backendapitypen';
 import {useInfo} from '@/services/InfoService';
 
 const { setInfo } = useInfo();
@@ -39,7 +39,7 @@ export async function updateQuiz(qid: number){
   }
   }
 
-
+  /*
   export async function checkQuiz(quizId: number, beantworteteFragen: Map<number, string>): Promise<any> {
     try {
       const response = await fetch(`/api/quiz/check`, {
@@ -51,6 +51,38 @@ export async function updateQuiz(qid: number){
           quizId,
           beantworteteFragen: Array.from(beantworteteFragen.entries()),
         }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error: any) {
+      setInfo(error.message);
+      return null;
+    }
+  }
+  */
+  export async function checkQuiz(quizId: number, beantworteteFragen: Map<number, string>): Promise<any> {
+    try {
+      const beantworteteFragenArray: antwort[] = Array.from(beantworteteFragen.entries()).map(([fid, antwort]) => ({
+        fid,
+        antwort,
+      }));
+  
+      const checkQuizData: checkQuiz = {
+        qid: quizId,
+        beantworteteFragen: beantworteteFragenArray,
+      };
+  
+      const response = await fetch(`/api/quiz/check`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(checkQuizData),
       });
   
       if (!response.ok) {
