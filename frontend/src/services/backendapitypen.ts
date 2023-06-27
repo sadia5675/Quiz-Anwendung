@@ -37,3 +37,9 @@ export interface antwort {
   fid: number 
   antwort: String
 }
+
+export interface IFrontendNachrichtEvent {
+  nachrichtentyp: string;
+  id: string;
+  operation: string;
+}

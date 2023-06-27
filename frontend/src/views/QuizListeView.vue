@@ -13,11 +13,8 @@
 
 
 <script setup lang="ts">
-
-
-
-import { quizListe, updateQuizInfoListe } from '../services/QuizListeService';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { quizListe, updateQuizInfoListe, startQuizLiveUpdate } from '../services/QuizListeService';
 
 updateQuizInfoListe();
 
@@ -37,6 +34,14 @@ const gefilterteListe = computed(() => {
 function resetSuchbegriff() {
   suchbegriff.value = '';
 }
+
+onMounted(() => {
+  startQuizLiveUpdate().catch((error) => {
+    console.error('WebSocket-Fehler:', error);
+    // Behandeln Sie den Fehler entsprechend Ihrer Anforderungen,
+    // z. B. durch Anzeigen einer Fehlermeldung im UI oder erneuten Verbindungsaufbau.
+  });
+});
 
 </script>
 
