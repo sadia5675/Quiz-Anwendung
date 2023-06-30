@@ -23,6 +23,7 @@ public class QuizRestAPIController {
 
     @Autowired
     private QuizService quizService;
+    @Autowired
     private FrageService frageService;
 
     // Record für Quiz-Liste

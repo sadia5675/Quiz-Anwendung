@@ -29,7 +29,7 @@ export interface IQuiz {
 // Record für checkQuiz
 export interface checkQuiz {
   qid: number
-  beantworteteFragen: antwort[]
+  antworten: antwort[]
 }
 
 //Record für die antwort
