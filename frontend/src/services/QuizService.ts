@@ -1,5 +1,5 @@
 import { ref, readonly, reactive } from 'vue';
-import { type IQuiz, type IFrage , type checkQuiz, type antwort} from '@/services/backendapitypen';
+import { type IQuiz, type IFrage , type checkQuiz, type antwort, type checkQuizResponse} from '@/services/backendapitypen';
 import {useInfo} from '@/services/InfoService';
 
 const { setInfo } = useInfo();
@@ -13,7 +13,7 @@ export const quiz = ref<IQuiz>({
 
 export const readonlyQuiz = readonly(quiz);
 
-export const antwortStatusMap = reactive ({map: new Map <number, string>() })
+//export const antwortStatusMap = reactive ({map: new Map <number, string>() })
 
 
 export async function updateQuiz(qid: number){
@@ -60,30 +60,15 @@ export async function updateQuiz(qid: number){
       }
   
       const data = await response.json();
-      console.log(`checkQuiz responsedata = ${JSON.stringify(data)}`);
-
-    convertErgebnisToMap(data);
+      console.log(`QuizService: antwort vom Backend = ${JSON.stringify(data)}`);
+      return data as checkQuizResponse;
       
-
-      return data;
+      
     } catch (error: any) {
       setInfo(error.message);
       return null;
     }
 
- 
-    function convertErgebnisToMap(ergebnisData: any) {
-      
-      for (const ergebnis of ergebnisData.ergebnisse) {
-        const antwortStatusText = ergebnis.richtig ? 'richtig' : 'falsch';
-        antwortStatusMap.map.set(ergebnis.fid, antwortStatusText);
-      }
-      
-      
-    }
-    
-    
-  
-
-
   }
+
+    

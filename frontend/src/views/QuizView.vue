@@ -17,27 +17,43 @@
   
 <script setup lang="ts">
 
-  import { defineProps,onMounted,ref } from 'vue'
-  import { updateQuiz,readonlyQuiz,checkQuiz, antwortStatusMap} from '@/services/QuizService';
+  import {onMounted,ref , reactive} from 'vue'
+  import { updateQuiz,readonlyQuiz,checkQuiz, } from '@/services/QuizService';
   import FrageBox from '@/components/FrageBox.vue';
   import { useInfo } from '@/services/InfoService';
   const { setInfo } = useInfo();
 
   const beantworteteFragen = ref(new Map<number, string>());
 
+  const antwortStatusMap = reactive ({map: new Map <number, string>() })
+
+
   function handleFrageBeantwortet(frageid: number, antwort: string) {
     beantworteteFragen.value.set(frageid, antwort);
   }
 
-  function handleZeitVorbei(frageid: number) {
+  async function handleZeitVorbei(frageid: number) {
     
     if (beantworteteFragen.value.size === readonlyQuiz.value.fragen.length) {
-      checkQuiz(readonlyQuiz.value.id, beantworteteFragen.value);
+    
+      try {
+      const data = await checkQuiz(readonlyQuiz.value.id, beantworteteFragen.value);
+      console.log(` QuizView: response from CheckQuiz = ${JSON.stringify(data)}`); // Console gibt aus das, was wir von checkQuiz bekommen haben
+      convertErgebnisToMap(data); // wir holen die ergebnisse von checkQuiz und tuen die alle in unsere Map 
+    } catch (error: any) {
+      setInfo(error.message);
+    }
    }
 
   }
-
-
+// durch diese funktion holen wir die ergebnisse von checkQuiz und tuen die alle in unsere Map 
+  function convertErgebnisToMap(ergebnisData: any) {
+      for (const ergebnis of ergebnisData.ergebnisse) {
+        const antwortStatusText = ergebnis.richtig ? 'richtig' : 'falsch';
+        antwortStatusMap.map.set(ergebnis.fid, antwortStatusText);
+      }
+      
+    }
 
   // In deiner router-Konfiguration hat man props: true für die Route /quiz/:quizid festgelegt, 
   // was bedeutet, dass die Route - Parameter als Props an die QuizView.vue - Komponente übergeben werden.

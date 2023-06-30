@@ -38,6 +38,17 @@ export interface antwort {
   antwort: String
 }
 
+// Record für die response von checkQuiz Methode
+export interface checkQuizResponse {
+  qid: number
+  antworten: antwortResponse[]
+}
+
+export interface antwortResponse {
+  qid: number
+  richtig: boolean
+}
+
 export interface IFrontendNachrichtEvent {
   nachrichtentyp: string;
   id: string;
