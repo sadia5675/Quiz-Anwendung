@@ -7,7 +7,7 @@
 
     <ul>
       <li v-for="frage in readonlyQuiz.fragen" :key="frage.frageid">
-        <frage-box :frage="frage" :antwortzeit="0" @fragebeantwortet="handleFrageBeantwortet" @zeitvorbei="handleZeitVorbei" ></frage-box>
+        <frage-box :class="antwortStatusMap.map.get(frage.frageid)" :frage="frage" :antwortzeit="0" @fragebeantwortet="handleFrageBeantwortet" @zeitvorbei="handleZeitVorbei" ></frage-box>
       </li>
     </ul>
   </div>
@@ -18,7 +18,7 @@
 <script setup lang="ts">
 
   import { defineProps,onMounted,ref } from 'vue'
-  import { updateQuiz,readonlyQuiz,checkQuiz } from '@/services/QuizService';
+  import { updateQuiz,readonlyQuiz,checkQuiz, antwortStatusMap} from '@/services/QuizService';
   import FrageBox from '@/components/FrageBox.vue';
   import { useInfo } from '@/services/InfoService';
   const { setInfo } = useInfo();
@@ -68,6 +68,18 @@
 
   
 <style scoped>
+
+.richtig {
+  border: 2px solid;
+  border-color: green;
+}
+
+.falsch {
+  border: 2px solid;
+  border-color: red;
+}
+
+
   div {
       margin: 20px;
       padding: 10px;

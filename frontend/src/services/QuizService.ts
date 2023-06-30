@@ -1,4 +1,4 @@
-import { ref, readonly } from 'vue';
+import { ref, readonly, reactive } from 'vue';
 import { type IQuiz, type IFrage , type checkQuiz, type antwort} from '@/services/backendapitypen';
 import {useInfo} from '@/services/InfoService';
 
@@ -12,6 +12,8 @@ export const quiz = ref<IQuiz>({
   });
 
 export const readonlyQuiz = readonly(quiz);
+
+export const antwortStatusMap = reactive ({map: new Map <number, string>() })
 
 
 export async function updateQuiz(qid: number){
@@ -50,6 +52,8 @@ export async function updateQuiz(qid: number){
         },
         body: JSON.stringify(checkQuizData),
       });
+
+      
       console.log(JSON.stringify(checkQuizData));
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -58,12 +62,8 @@ export async function updateQuiz(qid: number){
       const data = await response.json();
       console.log(`checkQuiz responsedata = ${JSON.stringify(data)}`);
 
-      /*convertErgebnisToMap(data);
-      const d = convertErgebnisToMap(data);
-      console.log(`checkQuiz d=${JSON.stringify(d)}`)
-      setAntwortStatus(d);
-      */
-
+    convertErgebnisToMap(data);
+      
 
       return data;
     } catch (error: any) {
@@ -71,33 +71,19 @@ export async function updateQuiz(qid: number){
       return null;
     }
 
-    /*
-    function convertErgebnisToMap(ergebnisData: any): Map<number, string> {
-      const antwortStatusMap = new Map<number, string>();
+ 
+    function convertErgebnisToMap(ergebnisData: any) {
+      
       for (const ergebnis of ergebnisData.ergebnisse) {
         const antwortStatusText = ergebnis.richtig ? 'richtig' : 'falsch';
-        antwortStatusMap.set(ergebnis.fid, antwortStatusText);
+        antwortStatusMap.map.set(ergebnis.fid, antwortStatusText);
       }
-      //console.log(JSON.stringify(antwortStatusMap.toString()));
-      console.log('antwortStatusMap:', antwortStatusMap);
-      return antwortStatusMap;
-    }
-
-    /*
-    function convertErgebnisToMap(ergebnisData: any): Map<number, string> {
-      const antwortStatusMap = new Map<number, string>();
-      for (const ergebnis of ergebnisData.ergebnisse) {
-        const antwortStatusText = ergebnis.richtig ? 'richtig' : 'falsch';
-        antwortStatusMap.set(ergebnis.fid, antwortStatusText);
-      }
-      return antwortStatusMap;
+      
+      
     }
     
-    function setAntwortStatus(antwortStatusMap: Map<number, string>) {
-      antwortStatus.value = antwortStatusMap;
-    }
-    */
-
+    
+  
 
 
   }
