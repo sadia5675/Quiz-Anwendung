@@ -1,15 +1,17 @@
 package de.hsrm.mi.web.projekt.services.kategorie;
+
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import de.hsrm.mi.web.projekt.entities.Kategorie.Kategorie;
 import de.hsrm.mi.web.projekt.entities.Kategorie.KategorieRepository;
 
 /**
-@author Ana-Maria Adanaia
+ * @author Ana-Maria Adanaia
  */
 
 @Service
@@ -24,12 +26,11 @@ public class KategorieServiceImpl implements KategorieService {
         this.kategorieRepository = kategorieRepository;
     }
 
-
     @Override
     public List<Kategorie> holeAlleKategorien() {
 
         List<Kategorie> kategorien = kategorieRepository.findAll();
-        LOGGER.info("Alle Kategorien wurden abgerufen."); 
+        LOGGER.info("Alle Kategorien wurden abgerufen.");
         return kategorien;
     }
 
@@ -39,25 +40,26 @@ public class KategorieServiceImpl implements KategorieService {
         Optional<Kategorie> kategorie = kategorieRepository.findById(id);
 
         if (kategorie.isPresent()) {
-           LOGGER.info("Kategorie mit ID {} wurde gefunden.", id);
+            LOGGER.info("Kategorie mit ID {} wurde gefunden.", id);
         } else {
-           LOGGER.info("Kategorie mit ID {} wurde nicht gefunden.", id);
+            LOGGER.info("Kategorie mit ID {} wurde nicht gefunden.", id);
         }
-        
+
         return kategorie;
     }
 
     @Override
     public Kategorie speichereKategorie(Kategorie k) {
-        
+
         Kategorie gespeicherteKategorie = kategorieRepository.save(k);
         LOGGER.info("Kategorie mit ID {} wurde gespeichert.", gespeicherteKategorie.getId());
         return gespeicherteKategorie;
     }
 
     @Override
+    @PreAuthorize("hasRole('CHEF')")
     public void loescheKategorie(long id) {
-        
+
         kategorieRepository.deleteById(id);
         LOGGER.info("Kategorie mit ID {} wurde gelöscht.", id);
     }
@@ -66,6 +68,5 @@ public class KategorieServiceImpl implements KategorieService {
     public int getAnzahlFragen(Kategorie kategorie) {
         return kategorie.getFragen().size();
     }
-    
-    
+
 }

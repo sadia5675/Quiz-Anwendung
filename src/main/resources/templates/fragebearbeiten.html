@@ -17,6 +17,9 @@
 			<a th:href="@{?sprache=en}">EN</a>
 			<a th:href="@{?sprache=nl}">NL</a>
 		</div>
+		<div class="logout-link">
+			<a th:href="@{/logout}">Logout</a>
+		</div>
 	</div>
 
 	<h1 th:text ="#{frageformular.titel.bearbeiten(${fragenr})}">Bearbeite Frage Nr. <span th:text="${fragenr}"></span></h1> 

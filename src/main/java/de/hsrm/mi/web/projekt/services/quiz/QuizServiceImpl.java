@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import de.hsrm.mi.web.projekt.configuration.messaging.FrontendNachrichtEvent;
@@ -68,6 +69,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    @PreAuthorize("hasRole('CHEF')")
     public void loescheQuiz(long id) {
         quizRepository.deleteById(id);
         LOGGER.info("Quiz mit ID {} wurde gelöscht.", id);

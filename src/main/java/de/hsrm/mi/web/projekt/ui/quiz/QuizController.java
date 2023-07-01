@@ -3,10 +3,12 @@
  */
 
 package de.hsrm.mi.web.projekt.ui.quiz;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,17 +28,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Controller
-@SessionAttributes({"quizFormular","quiz"})
+@SessionAttributes({ "quizFormular", "quiz" })
 public class QuizController {
 
-    @Autowired private QuizService quizService;
-    @Autowired private FrageService frageService;
+    @Autowired
+    private QuizService quizService;
+    @Autowired
+    private FrageService frageService;
 
-    private static final Logger logger = LoggerFactory.getLogger(QuizController.class); 
-    
+    private static final Logger logger = LoggerFactory.getLogger(QuizController.class);
 
-    @ModelAttribute("quizFormular") 
-    public void initQuizFormular(Model m){ 
+    @ModelAttribute("quizFormular")
+    public void initQuizFormular(Model m) {
         QuizFormular formular = new QuizFormular();
         m.addAttribute("quizFormular", formular);
     }
@@ -51,31 +54,30 @@ public class QuizController {
         List<Quiz> quizList = quizService.holeAlleQuiz();
         m.addAttribute("quizList", quizList);
         return "quizliste";
-    }    
+    }
 
     @GetMapping("/quiz/{quiznr}")
     public String showQuizForm(@PathVariable int quiznr,
-                                Model m, 
-                                @ModelAttribute("quizFormular") QuizFormular formular,
-                                @ModelAttribute("quiz") Quiz quiz){
-        
+            Model m,
+            @ModelAttribute("quizFormular") QuizFormular formular,
+            @ModelAttribute("quiz") Quiz quiz) {
 
         List<Frage> fragen = frageService.holeAlleFragen();
-        m.addAttribute("fragen", fragen);                            
+        m.addAttribute("fragen", fragen);
 
-        if(quiznr == 0){
-            formular = new QuizFormular(); 
-            m.addAttribute("quizFormular", formular); 
+        if (quiznr == 0) {
+            formular = new QuizFormular();
+            m.addAttribute("quizFormular", formular);
             m.addAttribute("quiz", new Quiz());
         }
 
-        if(quiznr > 0){
+        if (quiznr > 0) {
             Optional<Quiz> optionalQuiz = quizService.holeQuizMitId(quiznr);
             if (optionalQuiz.isPresent()) {
                 quiz = optionalQuiz.get();
-                formular.fromQuiz(quiz); 
-                m.addAttribute("quiz", quiz); 
-              
+                formular.fromQuiz(quiz);
+                m.addAttribute("quiz", quiz);
+
             }
         }
 
@@ -83,18 +85,24 @@ public class QuizController {
     }
 
     @GetMapping("/quiz/{id}/del")
-    public String deleteQuiz(@PathVariable("id") Long id){
-        quizService.loescheQuiz(id);
+    public String deleteQuiz(@PathVariable("id") Long id, Model model) {
+        try {
+            quizService.loescheQuiz(id);
+
+        } catch (AccessDeniedException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "errorPage";
+        }
         return "redirect:/quiz";
+
     }
 
     @PostMapping("/quiz/{quiznr}")
     public String submitQuizForm(@PathVariable long quiznr,
-                                Model m,
-                                @Valid @ModelAttribute("quizFormular") QuizFormular formular,
-                                BindingResult formularErrors,
-                                @ModelAttribute("quiz") Quiz quiz
-                                ) {
+            Model m,
+            @Valid @ModelAttribute("quizFormular") QuizFormular formular,
+            BindingResult formularErrors,
+            @ModelAttribute("quiz") Quiz quiz) {
 
         List<Frage> fragen = frageService.holeAlleFragen();
         m.addAttribute("fragen", fragen);
@@ -102,10 +110,10 @@ public class QuizController {
         if (formularErrors.hasErrors()) {
             logger.info("Errors = {}", formularErrors);
             return "quizbearbeiten";
-        
-        }else{
+
+        } else {
             formular.toQuiz(quiz);
-            try{
+            try {
                 Quiz gespeicherteQuiz = quizService.speichereQuiz(quiz);
                 m.addAttribute("quiz", gespeicherteQuiz);
                 if (quiznr == 0) {
@@ -114,13 +122,13 @@ public class QuizController {
                     return "quizbearbeiten";
                 }
 
-            }catch (RuntimeException e) {
+            } catch (RuntimeException e) {
                 String errorMessage = "Fehler beim Speichern vom quiz: " + e.getMessage();
                 m.addAttribute("info", errorMessage);
                 logger.error(errorMessage);
                 return "quizbearbeiten";
             }
         }
-        }
-    
     }
+
+}

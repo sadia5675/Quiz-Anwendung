@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import de.hsrm.mi.web.projekt.entities.frage.Frage;
@@ -18,7 +19,7 @@ import de.hsrm.mi.web.projekt.services.quizdienste.FrageQuelleServiceTheTriviaAP
 public class FrageServiceImpl implements FrageService {
     // um auf die Datenbank zuzugreifen
     private final FrageRepository frageRepository;
-    
+
     private final FrageQuelleServiceTheTriviaAPI frageQuelleService;;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FrageServiceImpl.class);
@@ -29,7 +30,6 @@ public class FrageServiceImpl implements FrageService {
         this.frageRepository = frageRepository;
         this.frageQuelleService = frageQuelleService;
     }
-    
 
     // um die Ergebnisse nach der Kategorie und dann nach der Punktzahl aufsteigend
     // zu sortieren
@@ -65,6 +65,7 @@ public class FrageServiceImpl implements FrageService {
 
     // löscht die Frage mit der angegebenen ID aus der Datenbank
     @Override
+    @PreAuthorize("hasRole('CHEF')")
     public void loescheFrage(long id) {
         frageRepository.deleteById(id);
         LOGGER.info("Frage mit ID {} wurde gelöscht.", id);
@@ -73,14 +74,15 @@ public class FrageServiceImpl implements FrageService {
     @Override
     public void generiereNeueFragen(int count) {
         for (int i = 1; i < count; i++) {
-        List<Frage> neueFragen = frageQuelleService.generiereNeueFragen(i);
+            List<Frage> neueFragen = frageQuelleService.generiereNeueFragen(i);
         }
-        
+
     }
+
     @Override
     public boolean pruefeAntwort(long fid, String antwort) {
 
-    Optional<Frage> optionalFrage = frageRepository.findById(fid);
+        Optional<Frage> optionalFrage = frageRepository.findById(fid);
 
         if (optionalFrage.isPresent()) {
             Frage frage = optionalFrage.get();
@@ -88,6 +90,6 @@ public class FrageServiceImpl implements FrageService {
         }
 
         return false;
-}
+    }
 
 }
