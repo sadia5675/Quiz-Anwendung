@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Benutzer registrieren</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/fragebearbeiten.css}">
+</head>
+<body>
+
+    <div class="header">
+        <h3>QuizVorrichtung</h3>
+        <div class="language-switch">
+            <a th:href="@{?sprache=de}">DE</a>
+            <a th:href="@{?sprache=en}">EN</a>
+            <a th:href="@{?sprache=nl}">NL</a>
+        </div>
+         
+    </div>
+
+    <h1 th:text = "#{benutzerregistrieren.titel}">Benutzer registriere</h1>
+
+    <form th:object="${benutzerFormular}" th:action="@{/registrieren}" method="post">
+        <div>
+            <label for="benutzername" th:text = "#{benutzerregistrieren.benutzername}" >Benutzername:</label>
+            <input type="text" id="benutzername" th:field="*{benutzername}" />
+            <span th:if="${#fields.hasErrors('benutzername')}" th:errors="*{benutzername}" class="error-message2"></span>
+        </div>
+        <div>
+            <label for="losung" th:text = "#{benutzerregistrieren.losung}" >Losung:</label>
+            <input type="password" id="losung" th:field="*{losung}" />
+            <span th:if="${#fields.hasErrors('losung')}" th:errors="*{losung}" class="error-message2"></span>
+        </div>
+        <div>
+            <label for="losungBestaetigen"  th:text = "#{benutzerregistrieren.losungwiederholung}" >Losung bestätigen:</label>
+            <input type="password" id="losungBestaetigen" th:field="*{losungBestaetigen}" />
+            <span th:if="${#fields.hasErrors('losungBestaetigen')}" th:errors="*{losungBestaetigen}" class="error-message2"></span>
+        </div>
+        <div>
+            <input type="submit" class="neueFrage-link" th:value="#{benutzerregistrieren.label.submit}" />
+            
+        </div>
+    </form>
+</body>
+</html>

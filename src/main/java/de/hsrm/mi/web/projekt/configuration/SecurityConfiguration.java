@@ -46,7 +46,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(HttpMethod.GET, "/kategorie", "/frage", "/quiz").permitAll()
+                .requestMatchers(HttpMethod.GET, "/kategorie", "/frage", "/quiz", "/registrieren" , "/fragebearbeiten.css" ).permitAll()
+                .requestMatchers(HttpMethod.POST, "/registrieren").permitAll()
                 .requestMatchers("/frage/0", "/kategorie/0", "/quiz/0")
                 .hasRole("CHEF")
                 .anyRequest()
