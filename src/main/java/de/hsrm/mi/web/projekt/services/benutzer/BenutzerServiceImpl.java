@@ -1,6 +1,7 @@
 package de.hsrm.mi.web.projekt.services.benutzer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import de.hsrm.mi.web.projekt.entities.benutzer.Benutzer;
@@ -11,10 +12,12 @@ public class BenutzerServiceImpl implements BenutzerService {
 
 
     private final BenutzerRepository benutzerRepository;
+    private final PasswordEncoder passwordEncoder;
 
      @Autowired
-    public BenutzerServiceImpl(BenutzerRepository benutzerRepository) {
+    public BenutzerServiceImpl(BenutzerRepository benutzerRepository, PasswordEncoder passwordEncoder) {
         this.benutzerRepository = benutzerRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -25,7 +28,8 @@ public class BenutzerServiceImpl implements BenutzerService {
     // Um einen neuen Benutzer anzulegen
     @Override
     public Benutzer erstelleBenutzer(String benutzername, String losung) {
-       Benutzer benutzer = new Benutzer(benutzername, losung);
+       String encodedLosung = passwordEncoder.encode(losung); 
+       Benutzer benutzer = new Benutzer(benutzername, encodedLosung);
        return benutzerRepository.save(benutzer);
     }
 

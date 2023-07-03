@@ -13,6 +13,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
@@ -22,7 +24,7 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
+    /* 
     @Bean
     public UserDetailsService userDetailsService() {
         UserBuilder userBuilder = User.builder().passwordEncoder(password -> passwordEncoder().encode(password));
@@ -41,11 +43,13 @@ public class SecurityConfiguration {
 
         return new InMemoryUserDetailsManager(user1, user2);
     }
+    */
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers(toH2Console()).permitAll()
                 .requestMatchers(HttpMethod.GET, "/kategorie", "/frage", "/quiz", "/registrieren" , "/fragebearbeiten.css" ).permitAll()
                 .requestMatchers(HttpMethod.POST, "/registrieren").permitAll()
                 .requestMatchers("/frage/0", "/kategorie/0", "/quiz/0")
@@ -55,9 +59,13 @@ public class SecurityConfiguration {
                 .formLogin()
                 .defaultSuccessUrl("/quiz")
                 .and()
-                .logout(out -> out.logoutSuccessUrl("/login"));
+                .logout(out -> out.logoutSuccessUrl("/login"))
+                .csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()));
+                http.headers().frameOptions().sameOrigin();
 
         return http.build();
     }
 
+
+    
 }
